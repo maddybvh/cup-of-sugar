@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class MessageItem extends Component {
+class SingleItem extends Component {
   constructor(props) {
     super(props);
 
@@ -11,13 +11,13 @@ class MessageItem extends Component {
   }
 
   onToggleEditMode = () => {
-    this.setState(state => ({
+    this.setState((state) => ({
       editMode: !state.editMode,
       editText: this.props.message.text,
     }));
   };
 
-  onChangeEditText = event => {
+  onChangeEditText = (event) => {
     this.setState({ editText: event.target.value });
   };
 
@@ -41,7 +41,7 @@ class MessageItem extends Component {
           />
         ) : (
           <span>
-            <strong>{message.userId}</strong> {message.text}
+            {message.text}
             {message.editedAt && <span>(Edited)</span>}
           </span>
         )}
@@ -72,4 +72,4 @@ class MessageItem extends Component {
   }
 }
 
-export default MessageItem;
+export default SingleItem;

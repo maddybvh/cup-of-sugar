@@ -11,9 +11,9 @@ const MyShares = () => (
       A list of items the current user is willing to share, and things
       they have asked to borrow.
     </p>
-    <h2>Lending</h2>
+    <h2>I'm offering:</h2>
     <Items />
-    <h2>Borrowing</h2>
+    <h2>I'm requesting:</h2>
   </div>
 );
 

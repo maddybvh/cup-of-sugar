@@ -12,7 +12,7 @@ class Items extends Component {
       text: '',
       loading: false,
       messages: [],
-      limit: 5,
+      limit: 50,
     };
   }
 
@@ -119,6 +119,7 @@ class Items extends Component {
               }
             >
               <input
+                placeholder="I'd by happy to share..."
                 type="text"
                 value={text}
                 onChange={this.onChangeText}
