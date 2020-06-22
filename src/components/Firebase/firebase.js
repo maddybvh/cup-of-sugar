@@ -91,11 +91,11 @@ class Firebase {
 
   users = () => this.db.collection('users');
 
-  // *** Message API ***
+  // *** Item API ***
 
-  message = (uid) => this.db.doc(`messages/${uid}`);
+  item = (uid) => this.db.doc(`items/${uid}`);
 
-  messages = () => this.db.collection('messages');
+  items = () => this.db.collection('items');
 }
 
 export default Firebase;

@@ -6,14 +6,14 @@ class SingleItem extends Component {
 
     this.state = {
       editMode: false,
-      editText: this.props.message.text,
+      editText: this.props.item.text,
     };
   }
 
   onToggleEditMode = () => {
     this.setState((state) => ({
       editMode: !state.editMode,
-      editText: this.props.message.text,
+      editText: this.props.item.text,
     }));
   };
 
@@ -22,13 +22,13 @@ class SingleItem extends Component {
   };
 
   onSaveEditText = () => {
-    this.props.onEditMessage(this.props.message, this.state.editText);
+    this.props.onEditItem(this.props.item, this.state.editText);
 
     this.setState({ editMode: false });
   };
 
   render() {
-    const { authUser, message, onRemoveMessage } = this.props;
+    const { authUser, item, onRemoveItem } = this.props;
     const { editMode, editText } = this.state;
 
     return (
@@ -41,12 +41,12 @@ class SingleItem extends Component {
           />
         ) : (
           <span>
-            {message.text}
-            {message.editedAt && <span>(Edited)</span>}
+            {item.text}
+            {item.editedAt && <span>(Edited)</span>}
           </span>
         )}
 
-        {authUser.uid === message.userId && (
+        {authUser.uid === item.userId && (
           <span>
             {editMode ? (
               <span>
@@ -60,7 +60,7 @@ class SingleItem extends Component {
             {!editMode && (
               <button
                 type="button"
-                onClick={() => onRemoveMessage(message.uid)}
+                onClick={() => onRemoveItem(item.uid)}
               >
                 Delete
               </button>

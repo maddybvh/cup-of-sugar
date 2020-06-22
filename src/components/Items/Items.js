@@ -11,35 +11,35 @@ class Items extends Component {
     this.state = {
       text: '',
       loading: false,
-      messages: [],
+      items: [],
       limit: 50,
     };
   }
 
   componentDidMount() {
-    this.onListenForMessages();
+    this.onListenForItems();
   }
 
-  onListenForMessages = () => {
+  onListenForItems = () => {
     this.setState({ loading: true });
 
     this.unsubscribe = this.props.firebase
-      .messages()
+      .items()
       .orderBy('createdAt', 'desc')
       .limit(this.state.limit)
       .onSnapshot((snapshot) => {
         if (snapshot.size) {
-          let messages = [];
+          let items = [];
           snapshot.forEach((doc) =>
-            messages.push({ ...doc.data(), uid: doc.id }),
+            items.push({ ...doc.data(), uid: doc.id }),
           );
 
           this.setState({
-            messages: messages.reverse(),
+            items: items.reverse(),
             loading: false,
           });
         } else {
-          this.setState({ messages: null, loading: false });
+          this.setState({ items: null, loading: false });
         }
       });
   };
@@ -52,8 +52,8 @@ class Items extends Component {
     this.setState({ text: event.target.value });
   };
 
-  onCreateMessage = (event, authUser) => {
-    this.props.firebase.messages().add({
+  onCreateItem = (event, authUser) => {
+    this.props.firebase.items().add({
       text: this.state.text,
       userId: authUser.uid,
       createdAt: this.props.firebase.fieldValue.serverTimestamp(),
@@ -64,35 +64,35 @@ class Items extends Component {
     event.preventDefault();
   };
 
-  onEditMessage = (message, text) => {
-    const { uid, ...messageSnapshot } = message;
+  onEditItem = (item, text) => {
+    const { uid, ...itemSnapshot } = item;
 
-    this.props.firebase.message(message.uid).update({
-      ...messageSnapshot,
+    this.props.firebase.item(item.uid).update({
+      ...itemSnapshot,
       text,
       editedAt: this.props.firebase.fieldValue.serverTimestamp(),
     });
   };
 
-  onRemoveMessage = (uid) => {
-    this.props.firebase.message(uid).delete();
+  onRemoveItem = (uid) => {
+    this.props.firebase.item(uid).delete();
   };
 
   onNextPage = () => {
     this.setState(
       (state) => ({ limit: state.limit + 5 }),
-      this.onListenForMessages,
+      this.onListenForItems,
     );
   };
 
   render() {
-    const { text, messages, loading } = this.state;
+    const { text, items, loading } = this.state;
 
     return (
       <AuthUserContext.Consumer>
         {(authUser) => (
           <div>
-            {!loading && messages && (
+            {!loading && items && (
               <button type="button" onClick={this.onNextPage}>
                 More
               </button>
@@ -100,23 +100,21 @@ class Items extends Component {
 
             {loading && <div>Loading ...</div>}
 
-            {messages && (
+            {items && (
               <ItemList
                 authUser={authUser}
-                messages={messages}
-                onEditMessage={this.onEditMessage}
-                onRemoveMessage={this.onRemoveMessage}
+                items={items}
+                onEditItem={this.onEditItem}
+                onRemoveItem={this.onRemoveItem}
               />
             )}
 
-            {!messages && (
+            {!items && (
               <div>Add something you'd be willing to share ...</div>
             )}
 
             <form
-              onSubmit={(event) =>
-                this.onCreateMessage(event, authUser)
-              }
+              onSubmit={(event) => this.onCreateItem(event, authUser)}
             >
               <input
                 placeholder="I'd by happy to share..."

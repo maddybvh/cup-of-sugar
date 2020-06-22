@@ -2,20 +2,15 @@ import React from 'react';
 
 import SingleItem from './SingleItem';
 
-const ItemList = ({
-  authUser,
-  messages,
-  onEditMessage,
-  onRemoveMessage,
-}) => (
+const ItemList = ({ authUser, items, onEditItem, onRemoveItem }) => (
   <ul>
-    {messages.map((message) => (
+    {items.map((item) => (
       <SingleItem
         authUser={authUser}
-        key={message.uid}
-        message={message}
-        onEditMessage={onEditMessage}
-        onRemoveMessage={onRemoveMessage}
+        key={item.uid}
+        item={item}
+        onEditItem={onEditItem}
+        onRemoveItem={onRemoveItem}
       />
     ))}
   </ul>
