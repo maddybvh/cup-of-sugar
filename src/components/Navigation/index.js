@@ -8,7 +8,7 @@ import * as ROLES from '../../constants/roles';
 
 const Navigation = () => (
   <AuthUserContext.Consumer>
-    {authUser =>
+    {(authUser) =>
       authUser ? (
         <NavigationAuth authUser={authUser} />
       ) : (
@@ -24,7 +24,7 @@ const NavigationAuth = ({ authUser }) => (
       <Link to={ROUTES.LANDING}>Landing</Link>
     </li>
     <li>
-      <Link to={ROUTES.HOME}>Home</Link>
+      <Link to={ROUTES.MYSHARES}>MyShares</Link>
     </li>
     <li>
       <Link to={ROUTES.ACCOUNT}>Account</Link>

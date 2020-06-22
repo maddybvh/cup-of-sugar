@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 
 import { AuthUserContext } from '../Session';
 import { withFirebase } from '../Firebase';
-import MessageList from './MessageList';
+import ItemList from './ItemList';
 
-class Messages extends Component {
+class Items extends Component {
   constructor(props) {
     super(props);
 
@@ -27,10 +27,10 @@ class Messages extends Component {
       .messages()
       .orderBy('createdAt', 'desc')
       .limit(this.state.limit)
-      .onSnapshot(snapshot => {
+      .onSnapshot((snapshot) => {
         if (snapshot.size) {
           let messages = [];
-          snapshot.forEach(doc =>
+          snapshot.forEach((doc) =>
             messages.push({ ...doc.data(), uid: doc.id }),
           );
 
@@ -48,7 +48,7 @@ class Messages extends Component {
     this.unsubscribe();
   }
 
-  onChangeText = event => {
+  onChangeText = (event) => {
     this.setState({ text: event.target.value });
   };
 
@@ -74,13 +74,13 @@ class Messages extends Component {
     });
   };
 
-  onRemoveMessage = uid => {
+  onRemoveMessage = (uid) => {
     this.props.firebase.message(uid).delete();
   };
 
   onNextPage = () => {
     this.setState(
-      state => ({ limit: state.limit + 5 }),
+      (state) => ({ limit: state.limit + 5 }),
       this.onListenForMessages,
     );
   };
@@ -90,7 +90,7 @@ class Messages extends Component {
 
     return (
       <AuthUserContext.Consumer>
-        {authUser => (
+        {(authUser) => (
           <div>
             {!loading && messages && (
               <button type="button" onClick={this.onNextPage}>
@@ -101,7 +101,7 @@ class Messages extends Component {
             {loading && <div>Loading ...</div>}
 
             {messages && (
-              <MessageList
+              <ItemList
                 authUser={authUser}
                 messages={messages}
                 onEditMessage={this.onEditMessage}
@@ -109,10 +109,12 @@ class Messages extends Component {
               />
             )}
 
-            {!messages && <div>There are no messages ...</div>}
+            {!messages && (
+              <div>Add something you'd be willing to share ...</div>
+            )}
 
             <form
-              onSubmit={event =>
+              onSubmit={(event) =>
                 this.onCreateMessage(event, authUser)
               }
             >
@@ -130,4 +132,4 @@ class Messages extends Component {
   }
 }
 
-export default withFirebase(Messages);
+export default withFirebase(Items);

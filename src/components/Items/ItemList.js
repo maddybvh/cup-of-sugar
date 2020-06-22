@@ -1,16 +1,16 @@
 import React from 'react';
 
-import MessageItem from './MessageItem';
+import SingleItem from './SingleItem';
 
-const MessageList = ({
+const ItemList = ({
   authUser,
   messages,
   onEditMessage,
   onRemoveMessage,
 }) => (
   <ul>
-    {messages.map(message => (
-      <MessageItem
+    {messages.map((message) => (
+      <SingleItem
         authUser={authUser}
         key={message.uid}
         message={message}
@@ -21,4 +21,4 @@ const MessageList = ({
   </ul>
 );
 
-export default MessageList;
+export default ItemList;
