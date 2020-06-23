@@ -1,33 +1,23 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { AuthUserContext } from '../Session';
 import { withFirebase } from '../Firebase';
 import ItemList from './ItemList';
 import ItemInput from './ItemInput';
 
-class Items extends Component {
-  constructor(props) {
-    super(props);
+const Items = (props) => {
+  const [text, setText] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [items, setItems] = useState([]);
+  const [limit, setLimit] = useState(5);
 
-    this.state = {
-      text: '',
-      loading: false,
-      items: [],
-      limit: 5,
-    };
-  }
+  const onListenForItems = () => {
+    setLoading(true);
 
-  componentDidMount() {
-    this.onListenForItems();
-  }
-
-  onListenForItems = () => {
-    this.setState({ loading: true });
-
-    this.unsubscribe = this.props.firebase
+    const unsubscribe = props.firebase
       .items()
       .orderBy('createdAt', 'desc')
-      .limit(this.state.limit)
+      .limit(limit)
       .onSnapshot((snapshot) => {
         if (snapshot.size) {
           let items = [];
@@ -35,105 +25,98 @@ class Items extends Component {
             items.push({ ...doc.data(), uid: doc.id }),
           );
 
-          this.setState({
-            items: items.reverse(),
-            loading: false,
-          });
+          setItems(items);
+          setLoading(false);
         } else {
-          this.setState({ items: null, loading: false });
+          setItems(null);
+          setLoading(false);
         }
       });
   };
 
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
-  onChangeText = (event) => {
-    this.setState({ text: event.target.value });
+  const onChangeText = (event) => {
+    setText(event.target.value);
   };
 
-  onCreateItem = (event, authUser) => {
-    this.props.firebase.items().add({
-      text: this.state.text,
+  const onCreateItem = (event, authUser) => {
+    props.firebase.items().add({
+      text: text,
       userId: authUser.uid,
-      createdAt: this.props.firebase.fieldValue.serverTimestamp(),
+      createdAt: props.firebase.fieldValue.serverTimestamp(),
     });
 
-    this.setState({ text: '' });
+    setText('');
 
     event.preventDefault();
   };
 
-  onEditItem = (item, text) => {
+  const onEditItem = (item, text) => {
     const { uid, ...itemSnapshot } = item;
 
-    this.props.firebase.item(item.uid).update({
+    props.firebase.item(item.uid).update({
       ...itemSnapshot,
       text,
-      editedAt: this.props.firebase.fieldValue.serverTimestamp(),
+      editedAt: props.firebase.fieldValue.serverTimestamp(),
     });
   };
 
-  onRemoveItem = (uid) => {
-    this.props.firebase.item(uid).delete();
+  const onRemoveItem = (uid) => {
+    props.firebase.item(uid).delete();
   };
 
-  onNextPage = () => {
-    this.setState(
-      (state) => ({ limit: state.limit + 5 }),
-      this.onListenForItems,
-    );
+  const onNextPage = () => {
+    setLimit(limit + 5);
+    onListenForItems();
   };
 
-  render() {
-    const { text, items, loading } = this.state;
+  useEffect(() => {
+    onListenForItems();
+  }, [props.firebase.items]);
 
-    return (
-      <AuthUserContext.Consumer>
-        {(authUser) => (
-          <div>
-            {!items && (
-              <div>Add something you'd be willing to share ...</div>
-            )}
+  return (
+    <AuthUserContext.Consumer>
+      {(authUser) => (
+        <div>
+          {!items && (
+            <div>Add something you'd be willing to share ...</div>
+          )}
 
-            <ItemInput
+          <ItemInput
+            authUser={authUser}
+            onCreateItem={onCreateItem}
+            onChangeText={onChangeText}
+            text={text}
+            placeholder={props.placeholder}
+            buttonText={props.buttonText}
+          />
+
+          {loading && <div>Loading ...</div>}
+
+          {items && (
+            <ItemList
               authUser={authUser}
-              onCreateItem={this.onCreateItem}
-              onChangeText={this.onChangeText}
-              text={text}
-              placeholder={this.props.placeholder}
-              buttonText={this.props.buttonText}
+              items={items}
+              onEditItem={onEditItem}
+              onRemoveItem={onRemoveItem}
+              queryKey={props.queryKey}
             />
+          )}
 
-            {loading && <div>Loading ...</div>}
-
-            {items && (
-              <ItemList
-                authUser={authUser}
-                items={items}
-                onEditItem={this.onEditItem}
-                onRemoveItem={this.onRemoveItem}
-                queryKey={this.props.queryKey}
-              />
-            )}
-
-            {!loading && items && (
-              <div className="text-center">
-                <button
-                  type="button"
-                  onClick={this.onNextPage}
-                  className="btn btn-outline-secondary btn-sm"
-                >
-                  More
-                </button>
-              </div>
-            )}
-          </div>
-        )}
-      </AuthUserContext.Consumer>
-    );
-  }
-}
+          {!loading && items && (
+            <div className="text-center">
+              <button
+                type="button"
+                onClick={onNextPage}
+                className="btn btn-outline-secondary btn-sm"
+              >
+                More
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+    </AuthUserContext.Consumer>
+  );
+};
 
 export default withFirebase(Items);
