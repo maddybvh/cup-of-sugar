@@ -61,10 +61,10 @@ const NavigationNonAuth = () => {
   const activeKey = window.location.pathname;
   return (
     <Nav
-      className="justify-content-end"
+      className="justify-content-end mt-2 mb-2"
       activeKey={activeKey}
       defaultActiveKey="1"
-      variant="pills"
+      variant="tabs"
     >
       <Nav.Item>
         <Nav.Link eventKey={ROUTES.LANDING} href={ROUTES.LANDING}>

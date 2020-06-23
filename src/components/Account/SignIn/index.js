@@ -9,12 +9,12 @@ import * as ROUTES from '../../../constants/routes';
 
 const SignInPage = () => (
   <div>
-    <h1>SignIn</h1>
+    <h1>Sign In</h1>
     <SignInForm />
+    <PasswordForgetLink />
     <SignInGoogle />
     <SignInFacebook />
     <SignInTwitter />
-    <PasswordForgetLink />
     <SignUpLink />
   </div>
 );
@@ -68,22 +68,28 @@ class SignInFormBase extends Component {
     const isInvalid = password === '' || email === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={this.onSubmit} className="form-group">
         <input
           name="email"
           value={email}
           onChange={this.onChange}
-          type="text"
           placeholder="Email Address"
+          type="email"
+          class="form-control"
         />
         <input
           name="password"
           value={password}
           onChange={this.onChange}
           type="password"
+          class="form-control"
           placeholder="Password"
         />
-        <button disabled={isInvalid} type="submit">
+        <button
+          disabled={isInvalid}
+          type="submit"
+          className="btn btn-success mt-1"
+        >
           Sign In
         </button>
 
@@ -134,7 +140,9 @@ class SignInGoogleBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <button type="submit">Sign In with Google</button>
+        <button type="submit" className="btn btn-outline-secondary">
+          Sign In with Google
+        </button>
 
         {error && <p>{error.message}</p>}
       </form>
@@ -183,7 +191,9 @@ class SignInFacebookBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <button type="submit">Sign In with Facebook</button>
+        <button type="submit" className="btn btn-outline-secondary">
+          Sign In with Facebook
+        </button>
 
         {error && <p>{error.message}</p>}
       </form>
@@ -232,7 +242,9 @@ class SignInTwitterBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <button type="submit">Sign In with Twitter</button>
+        <button type="submit" className="btn btn-outline-secondary">
+          Sign In with Twitter
+        </button>
 
         {error && <p>{error.message}</p>}
       </form>

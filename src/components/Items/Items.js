@@ -102,6 +102,8 @@ class Items extends Component {
               onCreateItem={this.onCreateItem}
               onChangeText={this.onChangeText}
               text={text}
+              placeholder={this.props.placeholder}
+              buttonText={this.props.buttonText}
             />
 
             {loading && <div>Loading ...</div>}

@@ -8,13 +8,15 @@ const ItemInput = ({
   onCreateItem,
   onChangeText,
   text,
+  placeholder,
+  buttonText,
 }) => {
   return authUser ? (
     <form onSubmit={(event) => onCreateItem(event, authUser)}>
       <div className="row ml-4">
         <div className="col">
           <input
-            placeholder="I'd by happy to share..."
+            placeholder={placeholder}
             type="text"
             value={text}
             onChange={onChangeText}
@@ -29,7 +31,7 @@ const ItemInput = ({
             type="submit"
             aria-label="Submit"
           >
-            Add offer
+            {buttonText}
             <svg
               className="bi bi-arrow-right-circle-fill ml-2"
               width="1em"
