@@ -34,6 +34,7 @@ const AccountPage = () => (
     {(authUser) => (
       <div>
         <h1>Account: {authUser.email}</h1>
+        <h2>Update password</h2>
         <PasswordForgetLink />
         <PasswordChangeForm />
         <LoginManagement authUser={authUser} />
@@ -96,7 +97,7 @@ class LoginManagementBase extends Component {
 
     return (
       <div>
-        <label>Update Sign In Methods:</label>
+        <h2>Update Sign In Methods:</h2>
         <ul>
           {SIGN_IN_METHODS.map((signInMethod) => {
             const onlyOneLeft = activeSignInMethods.length === 1;
@@ -105,7 +106,10 @@ class LoginManagementBase extends Component {
             );
 
             return (
-              <li key={signInMethod.id}>
+              <li
+                key={signInMethod.id}
+                className="list-unstyled ml-0"
+              >
                 {signInMethod.id === 'password' ? (
                   <DefaultLoginToggle
                     onlyOneLeft={onlyOneLeft}

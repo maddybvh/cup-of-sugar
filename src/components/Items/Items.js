@@ -115,12 +115,18 @@ class Items extends Component {
                 queryKey={this.props.queryKey}
               />
             )}
-            {/* 
+
             {!loading && items && (
-              <button type="button" onClick={this.onNextPage}>
-                More
-              </button>
-            )} */}
+              <div className="text-center">
+                <button
+                  type="button"
+                  onClick={this.onNextPage}
+                  className="btn btn-outline-secondary btn-sm"
+                >
+                  More
+                </button>
+              </div>
+            )}
           </div>
         )}
       </AuthUserContext.Consumer>
