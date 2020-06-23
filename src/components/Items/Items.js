@@ -8,7 +8,7 @@ import ItemInput from './ItemInput';
 
 const Items = (props) => {
   const [text, setText] = useState('');
-  const [items, setItems] = useState([]);
+  const items = [];
   const limit = 5;
 
   let query = null;
@@ -42,7 +42,7 @@ const Items = (props) => {
       break;
   }
 
-  const [value, loading, error] = useCollection(query);
+  let [value, loading, error] = useCollection(query);
 
   const onChangeText = (event) => {
     setText(event.target.value);
@@ -74,33 +74,26 @@ const Items = (props) => {
     props.firebase.item(uid).delete();
   };
 
-  useEffect(() => {
-    value &&
-      value.docs.forEach((doc) =>
-        items.push({ ...doc.data(), uid: doc.id }),
-      );
-    setItems(items);
-  }, [value, items]);
+  value &&
+    value.docs.forEach((doc) =>
+      items.push({ ...doc.data(), uid: doc.id }),
+    );
 
   return (
     <AuthUserContext.Consumer>
       {(authUser) => (
         <div>
-          {!items && (
-            <ItemInput
-              authUser={authUser}
-              onCreateItem={onCreateItem}
-              onChangeText={onChangeText}
-              text={text}
-              placeholder={props.placeholder}
-              buttonText={props.buttonText}
-            />
-          )}
+          <ItemInput
+            authUser={authUser}
+            onCreateItem={onCreateItem}
+            onChangeText={onChangeText}
+            text={text}
+            placeholder={props.placeholder}
+            buttonText={props.buttonText}
+          />
 
           {loading && <div>Loading ...</div>}
-
           {error && <div>Error accessing Firestore: {error}</div>}
-
           {items && (
             <ItemList
               authUser={authUser}

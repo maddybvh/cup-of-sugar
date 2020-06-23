@@ -2,18 +2,7 @@ import React from 'react';
 
 import { ItemCard } from './ItemCard';
 
-const ItemList = ({
-  authUser,
-  items,
-  onEditItem,
-  onRemoveItem,
-  queryKey,
-}) => {
-  // switch (queryKey) {
-  //   case 'myShares':
-  //     items = items.filter((item) => item.userId === authUser.uid);
-  //     break;
-  // }
+const ItemList = ({ authUser, items, onEditItem, onRemoveItem }) => {
   return (
     <ul>
       {items.map((item) => (
