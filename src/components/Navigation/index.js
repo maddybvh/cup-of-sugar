@@ -2,7 +2,7 @@ import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 
 import { AuthUserContext } from '../Session';
-import SignOutButton from '../SignOut';
+import SignOutButton from '../Account/SignOut';
 import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
 

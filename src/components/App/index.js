@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Navigation from '../Navigation';
 import LandingPage from '../Landing';
-import SignUpPage from '../SignUp';
-import SignInPage from '../SignIn';
-import PasswordForgetPage from '../PasswordForget';
+import SignUpPage from '../Account/SignUp';
+import SignInPage from '../Account/SignIn';
+import PasswordForgetPage from '../Account/PasswordForget';
 import MyShares from '../MyShares';
 import AccountPage from '../Account';
 import AdminPage from '../Admin';

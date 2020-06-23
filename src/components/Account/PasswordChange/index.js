@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { withFirebase } from '../Firebase';
+import { withFirebase } from '../../Firebase';
 
 const INITIAL_STATE = {
   passwordOne: '',
@@ -15,7 +15,7 @@ class PasswordChangeForm extends Component {
     this.state = { ...INITIAL_STATE };
   }
 
-  onSubmit = event => {
+  onSubmit = (event) => {
     const { passwordOne } = this.state;
 
     this.props.firebase
@@ -23,14 +23,14 @@ class PasswordChangeForm extends Component {
       .then(() => {
         this.setState({ ...INITIAL_STATE });
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({ error });
       });
 
     event.preventDefault();
   };
 
-  onChange = event => {
+  onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
@@ -41,13 +41,15 @@ class PasswordChangeForm extends Component {
       passwordOne !== passwordTwo || passwordOne === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={this.onSubmit} class="form-group">
+        <label>Reset password: </label>
         <input
           name="passwordOne"
           value={passwordOne}
           onChange={this.onChange}
           type="password"
           placeholder="New Password"
+          class="form-control"
         />
         <input
           name="passwordTwo"
@@ -55,8 +57,13 @@ class PasswordChangeForm extends Component {
           onChange={this.onChange}
           type="password"
           placeholder="Confirm New Password"
+          class="form-control"
         />
-        <button disabled={isInvalid} type="submit">
+        <button
+          disabled={isInvalid}
+          type="submit"
+          className="btn btn-primary"
+        >
           Reset My Password
         </button>
 

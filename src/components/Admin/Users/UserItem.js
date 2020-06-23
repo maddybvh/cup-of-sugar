@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { withFirebase } from '../Firebase';
+import { withFirebase } from '../../Firebase';
 
 class UserItem extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class UserItem extends Component {
 
     this.unsubscribe = this.props.firebase
       .user(this.props.match.params.id)
-      .onSnapshot(snapshot => {
+      .onSnapshot((snapshot) => {
         this.setState({
           user: snapshot.data(),
           loading: false,
