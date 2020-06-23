@@ -30,10 +30,9 @@ class SingleItem extends Component {
   render() {
     const { authUser, item, onRemoveItem } = this.props;
     const { editMode, editText } = this.state;
-
     return (
       <li>
-        {editMode ? (
+        {editMode && item ? (
           <input
             type="text"
             value={editText}

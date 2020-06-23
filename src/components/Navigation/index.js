@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Nav from 'react-bootstrap/Nav';
 
 import { AuthUserContext } from '../Session';
 import SignOutButton from '../SignOut';
@@ -18,37 +18,66 @@ const Navigation = () => (
   </AuthUserContext.Consumer>
 );
 
-const NavigationAuth = ({ authUser }) => (
-  <ul>
-    <li>
-      <Link to={ROUTES.LANDING}>Explore</Link>
-    </li>
-    <li>
-      <Link to={ROUTES.MYSHARES}>MyShares</Link>
-    </li>
-    <li>
-      <Link to={ROUTES.ACCOUNT}>Account</Link>
-    </li>
-    {!!authUser.roles[ROLES.ADMIN] && (
-      <li>
-        <Link to={ROUTES.ADMIN}>Admin</Link>
-      </li>
-    )}
-    <li>
-      <SignOutButton />
-    </li>
-  </ul>
-);
+const NavigationAuth = ({ authUser }) => {
+  const activeKey = window.location.pathname;
 
-const NavigationNonAuth = () => (
-  <ul>
-    <li>
-      <Link to={ROUTES.LANDING}>Explore</Link>
-    </li>
-    <li>
-      <Link to={ROUTES.SIGN_IN}>Sign In</Link>
-    </li>
-  </ul>
-);
+  return (
+    <Nav
+      className="justify-content-end mt-3"
+      activeKey={activeKey}
+      defaultActiveKey="1"
+      variant="pills"
+    >
+      <Nav.Item>
+        <Nav.Link eventKey={ROUTES.LANDING} href={ROUTES.LANDING}>
+          Explore
+        </Nav.Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Nav.Link eventKey={ROUTES.MYSHARES} href={ROUTES.MYSHARES}>
+          MyShares
+        </Nav.Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Nav.Link eventKey={ROUTES.ACCOUNT} href={ROUTES.ACCOUNT}>
+          Account
+        </Nav.Link>
+      </Nav.Item>
+      {!!authUser.roles[ROLES.ADMIN] && (
+        <Nav.Item>
+          <Nav.Link eventKey={ROUTES.ADMIN} href={ROUTES.ADMIN}>
+            Admin
+          </Nav.Link>
+        </Nav.Item>
+      )}
+      <Nav.Item>
+        <SignOutButton />
+      </Nav.Item>
+    </Nav>
+  );
+};
+
+const NavigationNonAuth = () => {
+  const activeKey = window.location.pathname;
+  return (
+    <Nav
+      className="justify-content-end"
+      activeKey={activeKey}
+      defaultActiveKey="1"
+      variant="pills"
+    >
+      <Nav.Item>
+        <Nav.Link eventKey={ROUTES.LANDING} href={ROUTES.LANDING}>
+          Explore
+        </Nav.Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Nav.Link eventKey={ROUTES.SIGN_IN} href={ROUTES.SIGN_IN}>
+          Sign In
+        </Nav.Link>
+      </Nav.Item>
+    </Nav>
+  );
+};
 
 export default Navigation;
