@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 export const ItemCard = (props) => {
-  const { authUser, key, item, onEditItem, onRemoveItem } = props;
+  const { authUser, item, onEditItem, onRemoveItem } = props;
 
   const [editMode, setEditMode] = useState(false);
   const [editText, setEditText] = useState(item.text);

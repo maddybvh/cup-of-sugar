@@ -100,6 +100,7 @@ class Items extends Component {
                 items={items}
                 onEditItem={this.onEditItem}
                 onRemoveItem={this.onRemoveItem}
+                queryKey={this.props.queryKey}
               />
             )}
             {/* 
