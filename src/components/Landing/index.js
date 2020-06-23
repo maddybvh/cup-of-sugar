@@ -5,7 +5,7 @@ const Landing = () => (
   <div>
     <h2>Your neighbors are looking for... </h2>
     <Items
-      queryKey={'allRequests'} //@todo
+      queryKey={'allRequests'}
       placeholder="What do you need?"
       buttonText="Add request"
     />

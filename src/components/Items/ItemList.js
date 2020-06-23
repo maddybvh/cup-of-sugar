@@ -9,11 +9,11 @@ const ItemList = ({
   onRemoveItem,
   queryKey,
 }) => {
-  switch (queryKey) {
-    case 'myShares':
-      items = items.filter((item) => item.userId === authUser.uid);
-      break;
-  }
+  // switch (queryKey) {
+  //   case 'myShares':
+  //     items = items.filter((item) => item.userId === authUser.uid);
+  //     break;
+  // }
   return (
     <ul>
       {items.map((item) => (

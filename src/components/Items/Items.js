@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useCollection } from 'react-firebase-hooks/firestore';
 
 import { AuthUserContext } from '../Session';
 import { withFirebase } from '../Firebase';
@@ -7,32 +8,41 @@ import ItemInput from './ItemInput';
 
 const Items = (props) => {
   const [text, setText] = useState('');
-  const [loading, setLoading] = useState(false);
   const [items, setItems] = useState([]);
-  const [limit, setLimit] = useState(5);
+  const limit = 5;
 
-  const onListenForItems = () => {
-    setLoading(true);
+  let query = null;
+  switch (props.queryKey) {
+    case 'myShares':
+      query = props.firebase
+        .items()
+        .where('userId', '==', props.authUser.uid)
+        .orderBy('createdAt', 'desc')
+        .limit(limit);
+      break;
+    case 'myRequests':
+      query = props.firebase
+        .items()
+        .where('userId', '==', '123') // @todo
+        .orderBy('createdAt', 'desc')
+        .limit(limit);
+      break;
+    case 'allRequests':
+      query = props.firebase
+        .items()
+        .where('userId', '==', '123') // @todo
+        .orderBy('createdAt', 'desc')
+        .limit(limit);
+      break;
+    default:
+      query = props.firebase
+        .items()
+        .orderBy('createdAt', 'desc')
+        .limit(limit);
+      break;
+  }
 
-    const unsubscribe = props.firebase
-      .items()
-      .orderBy('createdAt', 'desc')
-      .limit(limit)
-      .onSnapshot((snapshot) => {
-        if (snapshot.size) {
-          let items = [];
-          snapshot.forEach((doc) =>
-            items.push({ ...doc.data(), uid: doc.id }),
-          );
-
-          setItems(items);
-          setLoading(false);
-        } else {
-          setItems(null);
-          setLoading(false);
-        }
-      });
-  };
+  const [value, loading, error] = useCollection(query);
 
   const onChangeText = (event) => {
     setText(event.target.value);
@@ -64,33 +74,32 @@ const Items = (props) => {
     props.firebase.item(uid).delete();
   };
 
-  const onNextPage = () => {
-    setLimit(limit + 5);
-    onListenForItems();
-  };
-
   useEffect(() => {
-    onListenForItems();
-  }, [props.firebase.items]);
+    value &&
+      value.docs.forEach((doc) =>
+        items.push({ ...doc.data(), uid: doc.id }),
+      );
+    setItems(items);
+  }, [value, items]);
 
   return (
     <AuthUserContext.Consumer>
       {(authUser) => (
         <div>
           {!items && (
-            <div>Add something you'd be willing to share ...</div>
+            <ItemInput
+              authUser={authUser}
+              onCreateItem={onCreateItem}
+              onChangeText={onChangeText}
+              text={text}
+              placeholder={props.placeholder}
+              buttonText={props.buttonText}
+            />
           )}
 
-          <ItemInput
-            authUser={authUser}
-            onCreateItem={onCreateItem}
-            onChangeText={onChangeText}
-            text={text}
-            placeholder={props.placeholder}
-            buttonText={props.buttonText}
-          />
-
           {loading && <div>Loading ...</div>}
+
+          {error && <div>Error accessing Firestore: {error}</div>}
 
           {items && (
             <ItemList
@@ -100,18 +109,6 @@ const Items = (props) => {
               onRemoveItem={onRemoveItem}
               queryKey={props.queryKey}
             />
-          )}
-
-          {!loading && items && (
-            <div className="text-center">
-              <button
-                type="button"
-                onClick={onNextPage}
-                className="btn btn-outline-secondary btn-sm"
-              >
-                More
-              </button>
-            </div>
           )}
         </div>
       )}
