@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { AuthUserContext } from '../Session';
 import { withFirebase } from '../Firebase';
 import ItemList from './ItemList';
+import ItemInput from './ItemInput';
 
 class Items extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class Items extends Component {
       text: '',
       loading: false,
       items: [],
-      limit: 50,
+      limit: 5,
     };
   }
 
@@ -92,6 +93,17 @@ class Items extends Component {
       <AuthUserContext.Consumer>
         {(authUser) => (
           <div>
+            {!items && (
+              <div>Add something you'd be willing to share ...</div>
+            )}
+
+            <ItemInput
+              authUser={authUser}
+              onCreateItem={this.onCreateItem}
+              onChangeText={this.onChangeText}
+              text={text}
+            />
+
             {loading && <div>Loading ...</div>}
 
             {items && (
@@ -109,49 +121,6 @@ class Items extends Component {
                 More
               </button>
             )} */}
-
-            {!items && (
-              <div>Add something you'd be willing to share ...</div>
-            )}
-
-            <form
-              onSubmit={(event) => this.onCreateItem(event, authUser)}
-            >
-              <div className="row">
-                <div className="col">
-                  <input
-                    placeholder="I'd by happy to share..."
-                    type="text"
-                    value={text}
-                    onChange={this.onChangeText}
-                    className="form-control"
-                    name="item-title"
-                    aria-label="item title"
-                  />
-                </div>
-                <div className="col">
-                  <button
-                    className="btn btn-primary btn-lg"
-                    type="submit"
-                    aria-label="Submit"
-                  >
-                    <svg
-                      className="bi bi-arrow-right-circle-fill"
-                      width="1em"
-                      height="1em"
-                      viewBox="0 0 16 16"
-                      fill="currentColor"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-8.354 2.646a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L9.793 7.5H5a.5.5 0 0 0 0 1h4.793l-2.147 2.146z"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </form>
           </div>
         )}
       </AuthUserContext.Consumer>

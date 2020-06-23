@@ -10,7 +10,7 @@ const MyShares = () => (
     {(authUser) => (
       <>
         <h2>I'm offering...</h2>
-        <Items authUser={authUser} queryKey={'myOffers'} />
+        <Items authUser={authUser} queryKey={'myShares'} />
         <h2>I'm looking for...</h2>
       </>
     )}

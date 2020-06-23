@@ -10,8 +10,8 @@ const ItemList = ({
   queryKey,
 }) => {
   switch (queryKey) {
-    case 'myOffers':
-      items = items.filter((item) => item.userId == authUser.uid);
+    case 'myShares':
+      items = items.filter((item) => item.userId === authUser.uid);
       break;
   }
   return (
