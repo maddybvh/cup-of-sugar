@@ -92,12 +92,6 @@ class Items extends Component {
       <AuthUserContext.Consumer>
         {(authUser) => (
           <div>
-            {!loading && items && (
-              <button type="button" onClick={this.onNextPage}>
-                More
-              </button>
-            )}
-
             {loading && <div>Loading ...</div>}
 
             {items && (
@@ -108,6 +102,12 @@ class Items extends Component {
                 onRemoveItem={this.onRemoveItem}
               />
             )}
+            {/* 
+            {!loading && items && (
+              <button type="button" onClick={this.onNextPage}>
+                More
+              </button>
+            )} */}
 
             {!items && (
               <div>Add something you'd be willing to share ...</div>
@@ -116,26 +116,26 @@ class Items extends Component {
             <form
               onSubmit={(event) => this.onCreateItem(event, authUser)}
             >
-              <div class="row">
-                <div class="col">
+              <div className="row">
+                <div className="col">
                   <input
                     placeholder="I'd by happy to share..."
                     type="text"
                     value={text}
                     onChange={this.onChangeText}
-                    className="form-control form-control-lg"
+                    className="form-control"
                     name="item-title"
                     aria-label="item title"
                   />
                 </div>
-                <div class="col">
+                <div className="col">
                   <button
                     className="btn btn-primary btn-lg"
                     type="submit"
                     aria-label="Submit"
                   >
                     <svg
-                      class="bi bi-arrow-right-circle-fill"
+                      className="bi bi-arrow-right-circle-fill"
                       width="1em"
                       height="1em"
                       viewBox="0 0 16 16"
@@ -143,7 +143,7 @@ class Items extends Component {
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        fill-rule="evenodd"
+                        fillRule="evenodd"
                         d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-8.354 2.646a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L9.793 7.5H5a.5.5 0 0 0 0 1h4.793l-2.147 2.146z"
                       />
                     </svg>

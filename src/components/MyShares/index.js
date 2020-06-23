@@ -6,14 +6,9 @@ import Items from '../Items';
 
 const MyShares = () => (
   <div>
-    <h1>My Shares</h1>
-    <p>
-      A list of items the current user is willing to share, and things
-      they have asked to borrow.
-    </p>
-    <h2>I'm offering:</h2>
+    <h2>I'm offering...</h2>
     <Items />
-    <h2>I'm requesting:</h2>
+    <h2>I'm looking for...</h2>
   </div>
 );
 
