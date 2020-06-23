@@ -1,11 +1,11 @@
 import React from 'react';
 
-import SingleItem from './SingleItem';
+import { ItemCard } from './ItemCard';
 
 const ItemList = ({ authUser, items, onEditItem, onRemoveItem }) => (
   <ul>
     {items.map((item) => (
-      <SingleItem
+      <ItemCard
         authUser={authUser}
         key={item.uid}
         item={item}
