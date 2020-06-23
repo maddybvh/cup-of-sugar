@@ -40,7 +40,7 @@ export const ItemCard = (props) => {
           </span>
         )}
         <div className="float-right">
-          {authUser.uid === item.userId && (
+          {authUser && authUser.uid === item.userId && (
             <span>
               {editMode ? (
                 <span>

@@ -1,4 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
+import * as ROUTES from '../../constants/routes';
 
 const ItemInput = ({
   authUser,
@@ -6,7 +9,7 @@ const ItemInput = ({
   onChangeText,
   text,
 }) => {
-  return (
+  return authUser ? (
     <form onSubmit={(event) => onCreateItem(event, authUser)}>
       <div className="row ml-4">
         <div className="col">
@@ -44,6 +47,8 @@ const ItemInput = ({
         </div>
       </div>
     </form>
+  ) : (
+    <Link to={ROUTES.SIGN_IN}>Sign in to share.</Link>
   );
 };
 
