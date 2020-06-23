@@ -20,7 +20,7 @@ const MyShares = () => (
         <Items
           authUser={authUser}
           queryKey={'myRequests'}
-          placeholder="What do you need?"
+          placeholder="something special"
           buttonText="Add request"
         />
       </>

@@ -9,7 +9,7 @@ import ItemInput from './ItemInput';
 const Items = (props) => {
   const [text, setText] = useState('');
   const items = [];
-  const limit = 5;
+  const limit = 20;
 
   let query = null;
   switch (props.queryKey) {
@@ -83,15 +83,6 @@ const Items = (props) => {
     <AuthUserContext.Consumer>
       {(authUser) => (
         <div>
-          <ItemInput
-            authUser={authUser}
-            onCreateItem={onCreateItem}
-            onChangeText={onChangeText}
-            text={text}
-            placeholder={props.placeholder}
-            buttonText={props.buttonText}
-          />
-
           {loading && <div>Loading ...</div>}
           {error && <div>Error accessing Firestore: {error}</div>}
           {items && (
@@ -103,6 +94,14 @@ const Items = (props) => {
               queryKey={props.queryKey}
             />
           )}
+          <ItemInput
+            authUser={authUser}
+            onCreateItem={onCreateItem}
+            onChangeText={onChangeText}
+            text={text}
+            placeholder={props.placeholder}
+            buttonText={props.buttonText}
+          />
         </div>
       )}
     </AuthUserContext.Consumer>
