@@ -9,19 +9,17 @@ const MyShares = () => (
   <AuthUserContext.Consumer>
     {(authUser) => (
       <>
-        <h2>I'm offering...</h2>
-        <Items
-          authUser={authUser}
-          queryKey="myOffers"
-          placeholder="I'd be happy to share..."
-          buttonText="Add offer"
-        />
         <h2>I'm looking for...</h2>
         <Items
           authUser={authUser}
           queryKey={'myRequests'}
-          placeholder="something special"
           buttonText="Add request"
+        />
+        <h2>I'm offering...</h2>
+        <Items
+          authUser={authUser}
+          queryKey="myOffers"
+          buttonText="Add offer"
         />
       </>
     )}

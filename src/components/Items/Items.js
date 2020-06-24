@@ -87,17 +87,6 @@ const Items = (props) => {
     <AuthUserContext.Consumer>
       {(authUser) => (
         <div>
-          {loading && <div>Loading ...</div>}
-          {error && <div>Error accessing Firestore: {error}</div>}
-          {items && (
-            <ItemList
-              authUser={authUser}
-              items={items}
-              onEditItem={onEditItem}
-              onRemoveItem={onRemoveItem}
-              queryKey={props.queryKey}
-            />
-          )}
           <ItemInput
             authUser={authUser}
             onCreateItem={onCreateItem}
@@ -107,6 +96,18 @@ const Items = (props) => {
             buttonText={props.buttonText}
             type={props.type}
           />
+          {loading && <div>Loading ...</div>}
+          {error && <div>Error accessing Firestore: {error}</div>}
+
+          {items && (
+            <ItemList
+              authUser={authUser}
+              items={items}
+              onEditItem={onEditItem}
+              onRemoveItem={onRemoveItem}
+              queryKey={props.queryKey}
+            />
+          )}
         </div>
       )}
     </AuthUserContext.Consumer>

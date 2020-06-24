@@ -31,7 +31,13 @@ export const ItemCard = (props) => {
           />
         ) : (
           <span>
-            {item.text}
+            {item.type === 'request' && (
+              <span className="badge badge-info"> {item.type}</span>
+            )}
+            {item.type === 'offer' && (
+              <span className="badge badge-success">{item.type}</span>
+            )}
+            <div>{item.text}</div>
             {item.editedAt && (
               <span className="font-weight-light pl-2 pr-2">
                 (Edited)

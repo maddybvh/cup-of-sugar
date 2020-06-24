@@ -73,7 +73,7 @@ const NavigationNonAuth = () => {
       </Nav.Item>
       <Nav.Item>
         <Nav.Link eventKey={ROUTES.SIGN_IN} href={ROUTES.SIGN_IN}>
-          Sign In
+          Sign in to share
         </Nav.Link>
       </Nav.Item>
     </Nav>
