@@ -23,31 +23,37 @@ export const ItemCard = (props) => {
   return (
     <li className="card mr-3 mt-3">
       <div className="card-body p-1">
-        {editMode && item ? (
-          <input
-            type="text"
-            value={editText}
-            onChange={onChangeEditText}
-          />
-        ) : (
-          <span>
-            {item.type === 'request' && (
-              <span className="badge badge-info"> {item.type}</span>
-            )}
-            {item.type === 'offer' && (
-              <span className="badge badge-success">{item.type}</span>
-            )}
-            {item.userName && (
-              <span className="badge">by {item.userName}</span>
-            )}
-            <div>{item.text}</div>
-            {item.editedAt && (
-              <span className="font-weight-light pl-2 pr-2">
-                (Edited)
-              </span>
-            )}
-          </span>
-        )}
+        <a href={`/${item.uid}`}>
+          {editMode && item ? (
+            <input
+              type="text"
+              value={editText}
+              onChange={onChangeEditText}
+            />
+          ) : (
+            <span>
+              {item.type === 'request' && (
+                <span className="badge badge-info"> {item.type}</span>
+              )}
+              {item.type === 'offer' && (
+                <span className="badge badge-success">
+                  {item.type}
+                </span>
+              )}
+              {item.userName && (
+                <span className="badge" style={{ color: 'gray' }}>
+                  by {item.userName}
+                </span>
+              )}
+              <div style={{ color: 'black' }}>{item.text}</div>
+              {item.editedAt && (
+                <span className="font-weight-light pl-2 pr-2">
+                  (Edited)
+                </span>
+              )}
+            </span>
+          )}
+        </a>
       </div>
 
       {authUser && authUser.uid === item.userId && (

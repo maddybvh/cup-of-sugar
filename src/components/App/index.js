@@ -9,6 +9,7 @@ import PasswordForgetPage from '../Account/PasswordForget';
 import MyShares from '../MyShares';
 import AccountPage from '../Account';
 import AdminPage from '../Admin';
+import ItemPage from '../Items/ItemPage';
 
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
@@ -28,6 +29,7 @@ const App = () => (
       <Route path={ROUTES.MYSHARES} component={MyShares} />
       <Route path={ROUTES.ACCOUNT} component={AccountPage} />
       <Route path={ROUTES.ADMIN} component={AdminPage} />
+      <Route path="/:uid" component={ItemPage} />
     </div>
   </Router>
 );
