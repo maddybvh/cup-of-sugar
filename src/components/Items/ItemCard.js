@@ -22,7 +22,7 @@ export const ItemCard = (props) => {
 
   return (
     <li className="card mr-3 mt-3">
-      <div className="card-body">
+      <div className="card-body p-1">
         {editMode && item ? (
           <input
             type="text"
@@ -36,6 +36,9 @@ export const ItemCard = (props) => {
             )}
             {item.type === 'offer' && (
               <span className="badge badge-success">{item.type}</span>
+            )}
+            {item.userName && (
+              <span className="badge">by {item.userName}</span>
             )}
             <div>{item.text}</div>
             {item.editedAt && (

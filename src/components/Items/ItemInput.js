@@ -1,7 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-
-import * as ROUTES from '../../constants/routes';
 
 const ItemInput = ({
   authUser,
@@ -11,8 +8,8 @@ const ItemInput = ({
   placeholder,
   buttonText,
   type,
-}) => {
-  return authUser ? (
+}) =>
+  authUser ? (
     <form onSubmit={(event) => onCreateItem(event, authUser, type)}>
       <div className="form-group mt-4 mb-4">
         <div className="row ml-4">
@@ -55,6 +52,5 @@ const ItemInput = ({
   ) : (
     <div></div>
   );
-};
 
 export default ItemInput;

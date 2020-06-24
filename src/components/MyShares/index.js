@@ -14,12 +14,14 @@ const MyShares = () => (
           authUser={authUser}
           queryKey={'myRequests'}
           buttonText="Add request"
+          type="request"
         />
         <h2>I'm offering...</h2>
         <Items
           authUser={authUser}
           queryKey="myOffers"
           buttonText="Add offer"
+          type="offer"
         />
       </>
     )}

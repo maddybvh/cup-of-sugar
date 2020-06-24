@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 
 import { AuthUserContext } from '../Session';
@@ -52,16 +52,16 @@ const Items = (props) => {
   };
 
   const onCreateItem = (event, authUser, type) => {
+    event.preventDefault();
     props.firebase.items().add({
       text: text,
       userId: authUser.uid,
+      userName: authUser.username,
       type: type,
       createdAt: props.firebase.fieldValue.serverTimestamp(),
     });
 
     setText('');
-
-    event.preventDefault();
   };
 
   const onEditItem = (item, text) => {
