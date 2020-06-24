@@ -10,9 +10,10 @@ const ItemInput = ({
   text,
   placeholder,
   buttonText,
+  type,
 }) => {
   return authUser ? (
-    <form onSubmit={(event) => onCreateItem(event, authUser)}>
+    <form onSubmit={(event) => onCreateItem(event, authUser, type)}>
       <div className="row ml-4">
         <div className="col">
           <input

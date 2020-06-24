@@ -13,31 +13,34 @@ const Items = (props) => {
 
   let query = null;
   switch (props.queryKey) {
-    case 'myShares':
+    case 'myOffers':
       query = props.firebase
         .items()
+        .where('type', '==', 'offer')
         .where('userId', '==', props.authUser.uid)
-        .orderBy('createdAt', 'desc')
+        .orderBy('createdAt', 'asc')
         .limit(limit);
       break;
     case 'myRequests':
       query = props.firebase
         .items()
-        .where('userId', '==', '123') // @todo
-        .orderBy('createdAt', 'desc')
+        .where('type', '==', 'request')
+        .where('userId', '==', props.authUser.uid)
+        .orderBy('createdAt', 'asc')
         .limit(limit);
       break;
     case 'allRequests':
       query = props.firebase
         .items()
-        .where('userId', '==', '123') // @todo
-        .orderBy('createdAt', 'desc')
+        .where('type', '==', 'request')
+        .orderBy('createdAt', 'asc')
         .limit(limit);
       break;
     default:
       query = props.firebase
         .items()
-        .orderBy('createdAt', 'desc')
+        .where('type', '==', 'offer')
+        .orderBy('createdAt', 'asc')
         .limit(limit);
       break;
   }
@@ -48,10 +51,11 @@ const Items = (props) => {
     setText(event.target.value);
   };
 
-  const onCreateItem = (event, authUser) => {
+  const onCreateItem = (event, authUser, type) => {
     props.firebase.items().add({
       text: text,
       userId: authUser.uid,
+      type: type,
       createdAt: props.firebase.fieldValue.serverTimestamp(),
     });
 
@@ -101,6 +105,7 @@ const Items = (props) => {
             text={text}
             placeholder={props.placeholder}
             buttonText={props.buttonText}
+            type={props.type}
           />
         </div>
       )}

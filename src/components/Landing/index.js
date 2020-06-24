@@ -5,14 +5,16 @@ const Landing = () => (
   <div>
     <h2>Your neighbors are looking for... </h2>
     <Items
-      queryKey={'allRequests'}
+      queryKey="allRequests"
       placeholder="What do you need?"
       buttonText="Add request"
+      type="request"
     />
     <h2>Your neighbors are offering... </h2>
     <Items
       placeholder="I'd be happy to share..."
       buttonText="Add offer"
+      type="offer"
     />
   </div>
 );

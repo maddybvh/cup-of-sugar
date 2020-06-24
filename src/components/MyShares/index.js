@@ -12,7 +12,7 @@ const MyShares = () => (
         <h2>I'm offering...</h2>
         <Items
           authUser={authUser}
-          queryKey={'myShares'}
+          queryKey="myOffers"
           placeholder="I'd be happy to share..."
           buttonText="Add offer"
         />
