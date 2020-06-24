@@ -29,7 +29,7 @@ const App = () => (
       <Route path={ROUTES.MYSHARES} component={MyShares} />
       <Route path={ROUTES.ACCOUNT} component={AccountPage} />
       <Route path={ROUTES.ADMIN} component={AdminPage} />
-      <Route path="/:uid" component={ItemPage} />
+      <Route path="/i/:uid" component={ItemPage} />
     </div>
   </Router>
 );

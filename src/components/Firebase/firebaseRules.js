@@ -33,7 +33,8 @@ service cloud.firestore {
     match /items/{itemId} {
         allow read;
         allow create: if signedIn() && request.resource.data.userId == request.auth.uid;
-        allow update, delete: if signedIn() && isOwner();
+        allow update: if signedIn();
+        allow delete: if signedIn() && isOwner();
         
         match /comments/{commentId} {
         		allow read: if signedIn()

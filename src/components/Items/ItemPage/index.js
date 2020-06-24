@@ -6,7 +6,7 @@ import { AuthUserContext } from '../../Session';
 import ItemComments from './ItemComments';
 
 const ItemPage = (props) => {
-  const uid = window.location.pathname.split('/')[1];
+  const uid = window.location.pathname.split('/')[2];
 
   const reference = props.firebase.item(uid);
 
