@@ -23,14 +23,15 @@ export const ItemCard = (props) => {
   return (
     <li className="card mr-3 mt-3">
       <div className="card-body p-1">
-        <a href={`/${item.uid}`}>
-          {editMode && item ? (
-            <input
-              type="text"
-              value={editText}
-              onChange={onChangeEditText}
-            />
-          ) : (
+        {editMode && item ? (
+          <input
+            type="text"
+            value={editText}
+            onChange={onChangeEditText}
+            className="form-control"
+          />
+        ) : (
+          <a href={`/${item.uid}`}>
             <span>
               {item.type === 'request' && (
                 <span className="badge badge-info"> {item.type}</span>
@@ -46,18 +47,18 @@ export const ItemCard = (props) => {
                 </span>
               )}
               <div style={{ color: 'black' }}>{item.text}</div>
-              {item.editedAt && (
-                <span className="font-weight-light pl-2 pr-2">
-                  (Edited)
-                </span>
-              )}
             </span>
-          )}
-        </a>
+          </a>
+        )}
       </div>
 
       {authUser && authUser.uid === item.userId && (
         <div className="card-footer text-muted text-right p-1">
+          {item.editedAt && (
+            <span style={{ color: 'black', fontSize: 10 }}>
+              Edited
+            </span>
+          )}
           <span>
             {editMode ? (
               <span>
