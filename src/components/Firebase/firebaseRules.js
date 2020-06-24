@@ -34,6 +34,11 @@ service cloud.firestore {
         allow read;
         allow create: if signedIn() && request.resource.data.userId == request.auth.uid;
         allow update, delete: if signedIn() && isOwner();
+        
+        match /comments/{commentId} {
+        		allow read: if signedIn()
+        		allow create: if signedIn()
+    }
     }
     
 }

@@ -55,7 +55,12 @@ export const ItemCard = (props) => {
       {authUser && authUser.uid === item.userId && (
         <div className="card-footer text-muted text-right p-1">
           {item.editedAt && (
-            <span style={{ color: 'black', fontSize: 10 }}>
+            <span
+              style={{
+                color: 'black',
+                fontSize: 10,
+              }}
+            >
               Edited
             </span>
           )}

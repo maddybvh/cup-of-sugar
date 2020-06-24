@@ -96,6 +96,14 @@ class Firebase {
   item = (uid) => this.db.doc(`items/${uid}`);
 
   items = () => this.db.collection('items');
+
+  // *** Comment API ***
+
+  comment = (itemUid, commentUid) =>
+    this.db.doc(`items/${itemUid}`).doc(`coments/${commentUid}`);
+
+  comments = (itemUid) =>
+    this.db.doc(`items/${itemUid}`).collection('comments');
 }
 
 export default Firebase;

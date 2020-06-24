@@ -2,6 +2,8 @@ import React from 'react';
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
 
 import { withFirebase } from '../../Firebase';
+import { AuthUserContext } from '../../Session';
+import ItemComments from './ItemComments';
 
 const ItemPage = (props) => {
   const uid = window.location.pathname.split('/')[1];
@@ -37,6 +39,9 @@ const ItemPage = (props) => {
       )}
       {loading && <div>Loading...</div>}
       {error && <div>Error reaching the database: {error}</div>}
+      <AuthUserContext.Consumer>
+        {(authUser) => <ItemComments uid={uid} authUser={authUser} />}
+      </AuthUserContext.Consumer>
     </div>
   );
 };
