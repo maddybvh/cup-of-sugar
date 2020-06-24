@@ -21,3 +21,7 @@
 }
 
 /* End boilerplate masonry CSS */
+
+.short-input {
+  max-width: 200;
+}

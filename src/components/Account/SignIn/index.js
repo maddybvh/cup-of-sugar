@@ -12,9 +12,12 @@ const SignInPage = () => (
     <h1>Sign In</h1>
     <SignInForm />
     <PasswordForgetLink />
-    <SignInGoogle />
-    <SignInFacebook />
-    <SignInTwitter />
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <SignInGoogle />
+      <SignInFacebook />
+      <SignInTwitter />
+    </div>
+
     <SignUpLink />
   </div>
 );
@@ -69,26 +72,40 @@ class SignInFormBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit} className="form-group">
-        <input
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          placeholder="Email Address"
-          type="email"
-          class="form-control"
-        />
-        <input
-          name="password"
-          value={password}
-          onChange={this.onChange}
-          type="password"
-          class="form-control"
-          placeholder="Password"
-        />
+        <div class="form-group row">
+          <label for="colFormLabel" class="col-sm-2 col-form-label">
+            Email
+          </label>
+          <div class="col-sm-10">
+            <input
+              name="email"
+              value={email}
+              onChange={this.onChange}
+              placeholder="Email Address"
+              type="email"
+              class="form-control d-inline"
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="colFormLabel" class="col-sm-2 col-form-label">
+            Password
+          </label>
+          <div class="col-sm-10">
+            <input
+              name="password"
+              value={password}
+              onChange={this.onChange}
+              type="password"
+              className="form-control d-inline"
+              placeholder="Password"
+            />
+          </div>
+        </div>
         <button
           disabled={isInvalid}
           type="submit"
-          className="btn btn-success mt-1"
+          className="btn btn-success mt-1 d-inline"
         >
           Sign In
         </button>

@@ -151,7 +151,7 @@ class SignUpFormBase extends Component {
 }
 
 const SignUpLink = () => (
-  <p>
+  <p className="alert alert-info mt-4 mb-4">
     Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
   </p>
 );
