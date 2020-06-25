@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export const ItemCard = (props) => {
   const { authUser, item, onEditItem, onRemoveItem } = props;
@@ -31,7 +32,14 @@ export const ItemCard = (props) => {
             className="form-control"
           />
         ) : (
-          <a href={`/i/${item.uid}`}>
+          <Link
+            to={{
+              pathname: `/i/${item.uid}`,
+              state: {
+                item: item,
+              },
+            }}
+          >
             <span>
               {item.type === 'request' && (
                 <span className="badge badge-info"> {item.type}</span>
@@ -76,7 +84,7 @@ export const ItemCard = (props) => {
                 </span>
               )}
             </span>
-          </a>
+          </Link>
         )}
       </div>
 
