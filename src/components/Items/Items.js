@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 
 import { AuthUserContext } from '../Session';
@@ -7,9 +7,17 @@ import ItemList from './ItemList';
 import ItemInput from './ItemInput';
 
 const Items = (props) => {
+  const authUser = useContext(AuthUserContext);
   const [text, setText] = useState('');
   const items = [];
   const limit = 20;
+
+  const zipcodes =
+    props.zipcodesToSearch.length > 0
+      ? props.zipcodesToSearch
+      : authUser.zipcode;
+
+  console.log(zipcodes);
 
   let query = null;
   switch (props.queryKey) {
@@ -33,6 +41,7 @@ const Items = (props) => {
       query = props.firebase
         .items()
         .where('type', '==', 'request')
+        //.where('zipcode', 'in', zipcodes)
         .orderBy('createdAt', 'asc')
         .limit(limit);
       break;

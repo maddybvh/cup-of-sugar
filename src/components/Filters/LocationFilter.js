@@ -6,7 +6,7 @@ import Zipcodes from 'zipcodes';
 import { AuthUserContext } from '../Session';
 import InputZipcode from './InputZipcode';
 
-export const LocationFilter = () => {
+export const LocationFilter = ({ setZipCodesToSearch }) => {
   const authUser = useContext(AuthUserContext);
 
   const [zipcode, setZipcode] = useState(
@@ -24,11 +24,21 @@ export const LocationFilter = () => {
 
   const updateZip = (e) => {
     e.preventDefault();
-    console.log(Zipcodes.radius(zipcode, radioValue));
+    const zipCodeArray = Zipcodes.radius(zipcode, radioValue);
+    setZipCodesToSearch(zipCodeArray);
   };
 
   const handleChange = (e) => {
     setZipcode(e.target.value);
+  };
+
+  const handleRadioChange = (e) => {
+    setRadioValue(e.currentTarget.value);
+    const zipCodeArray = Zipcodes.radius(
+      zipcode,
+      e.currentTarget.value,
+    );
+    setZipCodesToSearch(zipCodeArray);
   };
 
   return (
@@ -43,7 +53,7 @@ export const LocationFilter = () => {
             name="radio"
             value={radio.value}
             checked={radioValue === radio.value}
-            onChange={(e) => setRadioValue(e.currentTarget.value)}
+            onChange={(e) => handleRadioChange(e)}
           >
             {radio.name}
           </ToggleButton>
