@@ -21,6 +21,7 @@ const Landing = () => {
 
       <h2>Your neighbors are offering... </h2>
       <Items
+        queryKey="allOffers"
         placeholder="I'd be happy to share..."
         buttonText="Add offer"
         type="offer"

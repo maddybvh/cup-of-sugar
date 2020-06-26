@@ -10,51 +10,52 @@ const Items = (props) => {
   const authUser = useContext(AuthUserContext);
   const [text, setText] = useState('');
   const items = [];
-  const limit = 20;
+  const limit = 10;
 
-  const zipcodes =
-    props.zipcodesToSearch.length > 0
-      ? props.zipcodesToSearch
-      : authUser.zipcode;
+  let zipcodes = [authUser.zipcode];
 
-  console.log(zipcodes);
+  let query = props.firebase.items();
+  if (props.zipcodesToSearch && props.zipcodesToSearch.length > 0) {
+    zipcodes = props.zipcodesToSearch.slice(0, 9);
+    query = query.where('zipcode', 'in', zipcodes);
+  }
 
-  let query = null;
+  console.log(query);
+
   switch (props.queryKey) {
     case 'myOffers':
-      query = props.firebase
-        .items()
+      query = query
         .where('type', '==', 'offer')
-        .where('userId', '==', props.authUser.uid)
+        .where('userId', '==', authUser.uid)
         .orderBy('createdAt', 'asc')
         .limit(limit);
       break;
     case 'myRequests':
-      query = props.firebase
-        .items()
+      query = query
         .where('type', '==', 'request')
-        .where('userId', '==', props.authUser.uid)
+        .where('userId', '==', authUser.uid)
         .orderBy('createdAt', 'asc')
         .limit(limit);
       break;
     case 'allRequests':
-      query = props.firebase
-        .items()
+      query = query
         .where('type', '==', 'request')
-        //.where('zipcode', 'in', zipcodes)
         .orderBy('createdAt', 'asc')
         .limit(limit);
       break;
-    default:
-      query = props.firebase
-        .items()
+    case 'allOffers':
+      query = query
         .where('type', '==', 'offer')
         .orderBy('createdAt', 'asc')
         .limit(limit);
       break;
+    default:
+      query = query
+        .where('type', '==', 'request')
+        .orderBy('createdAt', 'asc')
+        .limit(limit);
+      break;
   }
-
-  let [value, loading, error] = useCollection(query);
 
   const onChangeText = (event) => {
     setText(event.target.value);
@@ -87,6 +88,8 @@ const Items = (props) => {
   const onRemoveItem = (uid) => {
     props.firebase.item(uid).delete();
   };
+
+  let [value, loading, error] = useCollection(query);
 
   value &&
     value.docs.forEach((doc) =>

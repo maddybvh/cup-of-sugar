@@ -1,6 +1,5 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 
-import { AuthUserContext } from '../Session';
 import { withFirebase } from '../Firebase';
 
 const InputZipcode = ({ handleChange, handleSubmit, value }) => {
