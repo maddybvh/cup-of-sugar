@@ -1,0 +1,56 @@
+import React, { useState, useContext } from 'react';
+
+import { AuthUserContext } from '../Session';
+import { withFirebase } from '../Firebase';
+
+const InputZipcode = (props) => {
+  const authUser = useContext(AuthUserContext);
+  const [zipcode, setZipcode] = useState(
+    authUser.zipcode ? authUser.zipcode : '',
+  );
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleNewZip(authUser, zipcode);
+  };
+
+  const handleChange = (e) => {
+    setZipcode(e.target.value);
+  };
+
+  const handleNewZip = (authUser, zipcode) => {
+    const { uid, ...userSnapshot } = authUser;
+
+    props.firebase.user(authUser.uid).update({
+      ...userSnapshot,
+      zipcode,
+      editedAt: props.firebase.fieldValue.serverTimestamp(),
+    });
+  };
+
+  return (
+    <form className="form-inline" onSubmit={handleSubmit}>
+      <div className="form-group mx-sm-3 mb-2">
+        <label htmlFor="zipcode" className="col-sm-3 col-form-label">
+          Zipcode
+        </label>
+        <input
+          id="zip"
+          name="zip"
+          type="text"
+          inputMode="numeric"
+          pattern="^(^00000(|-0000))|(\d{5}(|-\d{4}))$"
+          className="form-control"
+          placeholder="5 digit zip code"
+          value={zipcode}
+          onChange={handleChange}
+        ></input>
+      </div>
+      <button type="submit" className="btn btn-primary mb-2">
+        Update
+      </button>
+    </form>
+  );
+};
+
+export default withFirebase(InputZipcode);

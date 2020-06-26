@@ -1,8 +1,10 @@
 import React from 'react';
 import Items from '../Items';
+import InputZipcode from '../MyShares/InputZipcode';
 
 const Landing = () => (
   <div>
+    <InputZipcode />
     <div className="border-bottom p-2 mb-4">
       <h2>Your neighbors are looking for... </h2>
       <Items
