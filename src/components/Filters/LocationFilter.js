@@ -14,7 +14,6 @@ export const LocationFilter = () => {
     { name: '20', value: '20' },
     { name: 'any', value: 'any' },
   ];
-  const options = [1, 5, 20, 50];
 
   const handleChange = (e) => {
     console.log(e);
