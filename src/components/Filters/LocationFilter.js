@@ -1,29 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
+import Zipcodes from 'zipcodes';
 
+import { AuthUserContext } from '../Session';
 import InputZipcode from './InputZipcode';
 
 export const LocationFilter = () => {
+  const authUser = useContext(AuthUserContext);
+
+  const [zipcode, setZipcode] = useState(
+    authUser.zipcode ? authUser.zipcode : '',
+  );
   const [radioValue, setRadioValue] = useState('1');
 
+  // @todo move this to constants
   const radios = [
     { name: '1', value: '1' },
     { name: '5', value: '5' },
     { name: '10', value: '10' },
     { name: '20', value: '20' },
-    { name: 'any', value: 'any' },
   ];
 
+  const updateZip = (e) => {
+    e.preventDefault();
+    console.log(Zipcodes.radius(zipcode, radioValue));
+  };
+
   const handleChange = (e) => {
-    console.log(e);
-    alert(e);
+    setZipcode(e.target.value);
   };
 
   return (
     <div className="row">
       <span className="span1 mt-2 mr-2">Show me results within </span>
-      <ButtonGroup toggle>
+      <ButtonGroup toggle className="mb-2">
         {radios.map((radio, idx) => (
           <ToggleButton
             key={idx}
@@ -39,7 +50,12 @@ export const LocationFilter = () => {
         ))}
       </ButtonGroup>
       <span className="span1 mt-2 ml-2">miles of </span>
-      <InputZipcode className="span4" />
+      <InputZipcode
+        value={zipcode}
+        className="span4"
+        handleSubmit={updateZip}
+        handleChange={handleChange}
+      />
     </div>
   );
 };
