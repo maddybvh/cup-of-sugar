@@ -58,6 +58,7 @@ const Items = (props) => {
       userId: authUser.uid,
       userName: authUser.username,
       type: type,
+      zipcode: authUser.zipcode,
       createdAt: props.firebase.fieldValue.serverTimestamp(),
     });
 

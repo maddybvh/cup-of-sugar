@@ -83,6 +83,16 @@ export const ItemCard = (props) => {
                   </div>
                 </span>
               )}
+              {item.zipcode && (
+                <span
+                  style={{
+                    color: 'black',
+                    fontSize: 10,
+                  }}
+                >
+                  {item.zipcode}
+                </span>
+              )}
             </span>
           </Link>
         )}
