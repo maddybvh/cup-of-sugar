@@ -1,5 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
+import lunr from 'lunr';
 
 import { AuthUserContext } from '../Session';
 import { withFirebase } from '../Firebase';
@@ -9,18 +10,10 @@ import ItemInput from './ItemInput';
 const Items = (props) => {
   const authUser = useContext(AuthUserContext);
   const [text, setText] = useState('');
-  const items = [];
+  const [items, setItems] = useState([]);
   const limit = 10;
 
-  let zipcodes = [authUser.zipcode];
-
   let query = props.firebase.items();
-  if (props.zipcodesToSearch && props.zipcodesToSearch.length > 0) {
-    zipcodes = props.zipcodesToSearch.slice(0, 9);
-    query = query.where('zipcode', 'in', zipcodes);
-  }
-
-  console.log(query);
 
   switch (props.queryKey) {
     case 'myOffers':
@@ -91,10 +84,42 @@ const Items = (props) => {
 
   let [value, loading, error] = useCollection(query);
 
-  value &&
-    value.docs.forEach((doc) =>
-      items.push({ ...doc.data(), uid: doc.id }),
-    );
+  useEffect(() => {
+    value &&
+      value.docs.forEach((doc) =>
+        items.push({ ...doc.data(), uid: doc.id }),
+      );
+    setItems(items);
+  }, [value]);
+
+  useEffect(() => {
+    const zipcodes = props.zipcodesToSearch;
+    const newItems = [];
+    if (zipcodes?.length > 0) {
+      const idx = lunr(function () {
+        this.ref('uid');
+        this.field('zipcode');
+
+        items.forEach(function (item) {
+          this.add(item);
+        }, this);
+      });
+
+      zipcodes.map((zipcode) => {
+        if (idx.search(zipcode).length > 0) {
+          newItems.push(idx.search(zipcode));
+        }
+      });
+
+      const refs = newItems[0]?.map((item) => item.ref);
+
+      const filteredItems = items?.filter((item) =>
+        refs?.includes(item.uid),
+      );
+
+      setItems(filteredItems);
+    }
+  }, [props.zipcodesToSearch.length]);
 
   return (
     <AuthUserContext.Consumer>
