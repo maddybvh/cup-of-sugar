@@ -31,7 +31,7 @@ const InputZipcode = (props) => {
   return (
     <form className="form-inline" onSubmit={handleSubmit}>
       <div className="form-group mx-sm-3 mb-2">
-        <label htmlFor="zipcode" className="col-sm-3 col-form-label">
+        <label htmlFor="zipcode" className="sr-only">
           Zipcode
         </label>
         <input
@@ -47,7 +47,7 @@ const InputZipcode = (props) => {
         ></input>
       </div>
       <button type="submit" className="btn btn-primary mb-2">
-        Update
+        Go
       </button>
     </form>
   );
