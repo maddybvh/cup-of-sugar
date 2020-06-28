@@ -22,6 +22,29 @@ class Firebase {
     this.googleProvider = new app.auth.GoogleAuthProvider();
     this.facebookProvider = new app.auth.FacebookAuthProvider();
     this.twitterProvider = new app.auth.TwitterAuthProvider();
+
+    /* Enable off-line mode */
+    this.db.enablePersistence().catch((err) => {
+      if (err.code === 'failed-precondition') {
+        console.log(
+          'Error code: ' +
+            err.code +
+            'Multiple tabs open, persistence can only be enabled in one tab at a a time.',
+        );
+        // Multiple tabs open, persistence can only be enabled
+        // in one tab at a a time.
+        // ...
+      } else if (err.code === 'unimplemented') {
+        console.log(
+          'Error code: ' +
+            err.code +
+            'The current browser does not support all of the features required to enable persistence',
+        );
+        // The current browser does not support all of the
+        // features required to enable persistence
+        // ...
+      }
+    });
   }
 
   // *** Auth API ***
