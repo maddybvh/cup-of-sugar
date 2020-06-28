@@ -1,14 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 
 import { AuthUserContext } from '../Session';
 import { withFirebase } from '../Firebase';
 import ItemList from './ItemList';
-import ItemInput from './ItemInput';
 
 const Items = (props) => {
   const authUser = useContext(AuthUserContext);
-  const [text, setText] = useState('');
   let items = [];
   const limit = 10;
   const zipcodesFromProps =
@@ -64,24 +62,6 @@ const Items = (props) => {
     }
 
     return query;
-  };
-
-  const onChangeText = (event) => {
-    setText(event.target.value);
-  };
-
-  const onCreateItem = (event, authUser, type) => {
-    event.preventDefault();
-    props.firebase.items().add({
-      text: text,
-      userId: authUser.uid,
-      userName: authUser.username,
-      type: type,
-      zipcode: authUser.zipcode,
-      createdAt: props.firebase.fieldValue.serverTimestamp(),
-    });
-
-    setText('');
   };
 
   const onEditItem = (item, text) => {
@@ -163,18 +143,8 @@ const Items = (props) => {
     <AuthUserContext.Consumer>
       {(authUser) => (
         <div>
-          <ItemInput
-            authUser={authUser}
-            onCreateItem={onCreateItem}
-            onChangeText={onChangeText}
-            text={text}
-            placeholder={props.placeholder}
-            buttonText={props.buttonText}
-            type={props.type}
-          />
           {loading && <div>Loading ...</div>}
           {error && <div>Error accessing Firestore: {error}</div>}
-
           {items && (
             <ItemList
               authUser={authUser}

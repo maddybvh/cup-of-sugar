@@ -4,11 +4,13 @@ import { AuthUserContext } from '../Session';
 
 import { withAuthorization, withEmailVerification } from '../Session';
 import Items from '../Items';
+import ItemInput from '../Items/ItemInput';
 
 const MyShares = () => (
   <AuthUserContext.Consumer>
     {(authUser) => (
       <>
+        <ItemInput authUser={authUser} buttonText="go" />
         <h2>I'm looking for...</h2>
         <Items
           authUser={authUser}
