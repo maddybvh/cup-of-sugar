@@ -13,10 +13,10 @@ const ItemList = ({ authUser, items, onEditItem, onRemoveItem }) => {
       {items.map((item) => (
         <ItemCard
           authUser={authUser}
-          key={item.uid}
           item={item}
           onEditItem={onEditItem}
           onRemoveItem={onRemoveItem}
+          key={item.uid}
         />
       ))}
     </Masonry>
