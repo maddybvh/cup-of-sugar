@@ -6,35 +6,32 @@ import ToggleButton from 'react-bootstrap/ToggleButton';
 
 import { withFirebase } from '../Firebase';
 
-const ItemInput = ({ authUser, firebase }) => {
+const ItemInput = ({ authUser, buttonText, firebase }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const [title, setTitle] = useState('');
+  const [text, setText] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState(null);
 
   const [radioValue, setRadioValue] = useState('offer');
 
   const handleSave = () => {
-    handleClose();
-    //onCreateItem(authUser);
-    console.log({
-      title: title,
-      description: description,
-      userId: authUser.uid,
-      userName: authUser.username,
-      type: radioValue,
-      zipcode: authUser.zipcode,
-      image: image,
-    });
+    if (text.length > 0) {
+      handleClose();
+      addItemToDb();
+    } else {
+      alert(
+        'A short description of your ' + radioValue + ' is required.',
+      );
+    }
   };
 
-  const createItem = () => {
+  const addItemToDb = () => {
     firebase.items().add({
-      title: title,
+      text: text,
       description: description,
       userId: authUser.uid,
       userName: authUser.username,
@@ -43,7 +40,7 @@ const ItemInput = ({ authUser, firebase }) => {
       createdAt: firebase.fieldValue.serverTimestamp(),
     });
 
-    setTitle('');
+    setText('');
     setDescription('');
   };
 
@@ -54,7 +51,7 @@ const ItemInput = ({ authUser, firebase }) => {
         onClick={handleShow}
         className="float-right"
       >
-        Add an offer or request
+        {buttonText}
       </Button>
 
       <Modal
@@ -66,8 +63,8 @@ const ItemInput = ({ authUser, firebase }) => {
         <Modal.Header closeButton>
           <Modal.Title></Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <form>
+        <form>
+          <Modal.Body>
             <div className="form-group">
               <div className="row">
                 <label
@@ -108,10 +105,11 @@ const ItemInput = ({ authUser, firebase }) => {
                 Title
               </label>
               <input
+                required
                 className="form-control form-control-lg"
                 type="text"
                 placeholder="A short description"
-                onChange={(e) => setTitle(e.currentTarget.value)}
+                onChange={(e) => setText(e.currentTarget.value)}
               ></input>
               <label htmlFor="description" className="mt-4">
                 Additional description (optional)
@@ -134,16 +132,20 @@ const ItemInput = ({ authUser, firebase }) => {
                 onChange={(e) => setImage(e.currentTarget.value)}
               />
             </div>
-          </form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="outline-secondary" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button variant="success" onClick={handleSave}>
-            Save {radioValue}
-          </Button>
-        </Modal.Footer>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="outline-secondary" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button
+              variant="success"
+              type="submit"
+              onClick={handleSave}
+            >
+              Save {radioValue}
+            </Button>
+          </Modal.Footer>
+        </form>
       </Modal>
     </>
   ) : (

@@ -35,6 +35,9 @@ const ItemPage = (props) => {
               </span>
             )}
           </span>
+          {item.description && (
+            <div className="mt-4 mb-4">{item.description}</div>
+          )}
         </>
       )}
       {loading && <div>Loading...</div>}

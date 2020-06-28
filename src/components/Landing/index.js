@@ -11,7 +11,10 @@ const Landing = () => {
     <AuthUserContext.Consumer>
       {(authUser) => (
         <>
-          <ItemInput authUser={authUser} buttonText="go" />
+          <ItemInput
+            authUser={authUser}
+            buttonText="Add an offer or request"
+          />
           <Filters setZipCodesToSearch={setZipCodesToSearch} />
 
           <div className="border-bottom p-2 mb-4">

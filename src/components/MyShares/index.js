@@ -10,7 +10,10 @@ const MyShares = () => (
   <AuthUserContext.Consumer>
     {(authUser) => (
       <>
-        <ItemInput authUser={authUser} buttonText="go" />
+        <ItemInput
+          authUser={authUser}
+          buttonText="Add an offer or request"
+        />
         <h2>I'm looking for...</h2>
         <Items
           authUser={authUser}

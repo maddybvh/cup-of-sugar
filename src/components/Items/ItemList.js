@@ -4,7 +4,7 @@ import Masonry from 'react-masonry-css';
 import { ItemCard } from './ItemCard';
 
 const ItemList = ({ authUser, items, onEditItem, onRemoveItem }) => {
-  return (
+  return items.length > 0 ? (
     <Masonry
       breakpointCols={breakpointColumnsObj}
       className="my-masonry-grid"
@@ -20,6 +20,8 @@ const ItemList = ({ authUser, items, onEditItem, onRemoveItem }) => {
         />
       ))}
     </Masonry>
+  ) : (
+    <div>Sorry, nothing matches that search.</div>
   );
 };
 

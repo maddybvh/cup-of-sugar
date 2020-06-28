@@ -10,7 +10,7 @@ export const LocationFilter = ({ setZipCodesToSearch }) => {
   const authUser = useContext(AuthUserContext);
 
   const [zipcode, setZipcode] = useState(
-    authUser.zipcode ? authUser.zipcode : '',
+    authUser?.zipcode ? authUser.zipcode : '',
   );
   const [radioValue, setRadioValue] = useState('1');
 
