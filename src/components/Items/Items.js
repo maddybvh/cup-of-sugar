@@ -90,7 +90,7 @@ const Items = (props) => {
         items.push({ ...doc.data(), uid: doc.id }),
       );
     setItems(items);
-  }, [value]);
+  }, [value, items]);
 
   useEffect(() => {
     const zipcodes = props.zipcodesToSearch;
@@ -106,9 +106,10 @@ const Items = (props) => {
       });
 
       zipcodes.map((zipcode) => {
-        if (idx.search(zipcode).length > 0) {
+        if (idx.search(zipcode)?.length > 0) {
           newItems.push(idx.search(zipcode));
         }
+        return newItems;
       });
 
       const refs = newItems[0]?.map((item) => item.ref);
@@ -119,7 +120,7 @@ const Items = (props) => {
 
       setItems(filteredItems);
     }
-  }, [props.zipcodesToSearch.length]);
+  }, [props.zipcodesToSearch, items]);
 
   return (
     <AuthUserContext.Consumer>
