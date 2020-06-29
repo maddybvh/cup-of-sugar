@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
+import { useDownloadURL } from 'react-firebase-hooks/storage';
 
 import { withFirebase } from '../../Firebase';
 import { AuthUserContext } from '../../Session';
@@ -11,6 +12,10 @@ const ItemPage = (props) => {
   const reference = props.firebase.item(uid);
 
   const [item, loading, error] = useDocumentDataOnce(reference);
+
+  const [downloadUrl, loadingImage, errorImage] = useDownloadURL(
+    props.firebase.image(item?.image),
+  );
 
   return (
     <div>
@@ -37,6 +42,13 @@ const ItemPage = (props) => {
           </span>
           {item.description && (
             <div className="mt-4 mb-4">{item.description}</div>
+          )}
+          {downloadUrl && (
+            <img
+              src={downloadUrl}
+              className="img-fluid m-2"
+              alt={item.text}
+            />
           )}
         </>
       )}

@@ -135,8 +135,7 @@ class Firebase {
   // *** Images API ***
   storage = this.storage;
 
-  image = (imageAsFile) =>
-    this.storage.ref(imageAsFile.name).child(`images/${imageAsFile}`);
+  image = (pathToImage) => this.storage.ref(`/${pathToImage}`);
 
   images = () => this.storage.ref().child('images');
 }
