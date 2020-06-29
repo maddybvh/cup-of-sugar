@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
+import { useDownloadURL } from 'react-firebase-hooks/storage';
 import { Link } from 'react-router-dom';
+import { withFirebase } from '../Firebase';
 
-export const ItemCard = (props) => {
-  const { authUser, item, onEditItem, onRemoveItem } = props;
-
+const ItemCard = ({
+  authUser,
+  item,
+  onEditItem,
+  onRemoveItem,
+  firebase,
+}) => {
   const [editMode, setEditMode] = useState(false);
   const [editText, setEditText] = useState(item.text);
 
@@ -20,6 +26,10 @@ export const ItemCard = (props) => {
     onEditItem(item, editText);
     setEditMode(false);
   };
+
+  const [downloadUrl, loadingImage, errorImage] = useDownloadURL(
+    item?.image && item.image ? firebase.image(item.image) : '',
+  );
 
   return (
     <li className="card mr-3 mt-3">
@@ -41,6 +51,13 @@ export const ItemCard = (props) => {
             }}
           >
             <span>
+              {downloadUrl && (
+                <img
+                  src={downloadUrl}
+                  className="card-img-top"
+                  alt={item.text}
+                />
+              )}
               {item.type === 'request' && (
                 <span className="badge badge-info"> {item.type}</span>
               )}
@@ -179,3 +196,5 @@ export const ItemCard = (props) => {
     </li>
   );
 };
+
+export default withFirebase(ItemCard);

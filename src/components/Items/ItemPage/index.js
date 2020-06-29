@@ -14,7 +14,7 @@ const ItemPage = (props) => {
   const [item, loading, error] = useDocumentDataOnce(reference);
 
   const [downloadUrl, loadingImage, errorImage] = useDownloadURL(
-    props.firebase.image(item?.image),
+    item?.image ? props.firebase.image(item.image) : '',
   );
 
   return (
@@ -50,6 +50,8 @@ const ItemPage = (props) => {
               alt={item.text}
             />
           )}
+          {loadingImage && <div>Image is loading</div>}
+          {errorImage && <div>{errorImage}</div>}
         </>
       )}
       {loading && <div>Loading...</div>}

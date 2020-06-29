@@ -17,9 +17,6 @@ const ItemInput = ({ authUser, buttonText, firebase }) => {
   const [text, setText] = useState('');
   const [description, setDescription] = useState('');
   const [imageAsFile, setImageAsFile] = useState('');
-  const [imageAsUrl, setImageAsUrl] = useState({
-    imgUrl: '',
-  });
 
   const [radioValue, setRadioValue] = useState('offer');
 

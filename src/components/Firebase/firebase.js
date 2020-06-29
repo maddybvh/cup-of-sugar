@@ -136,8 +136,6 @@ class Firebase {
   storage = this.storage;
 
   image = (pathToImage) => this.storage.ref(`/${pathToImage}`);
-
-  images = () => this.storage.ref().child('images');
 }
 
 export default Firebase;
