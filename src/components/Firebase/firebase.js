@@ -1,11 +1,15 @@
 import app from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/storage';
 import 'firebase/firestore';
-import { firebaseConfig } from '../../constants/secrets';
+import { firebaseConfig, storage } from '../../constants/secrets';
 
 class Firebase {
   constructor() {
     app.initializeApp(firebaseConfig);
+
+    // *** Storage ***
+    this.storage = app.storage();
 
     /* Helper */
 
@@ -127,6 +131,14 @@ class Firebase {
 
   comments = (itemUid) =>
     this.db.doc(`items/${itemUid}`).collection('comments');
+
+  // *** Images API ***
+  storage = this.storage;
+
+  image = (imageAsFile) =>
+    this.storage.ref(imageAsFile.name).child(`images/${imageAsFile}`);
+
+  images = () => this.storage.ref().child('images');
 }
 
 export default Firebase;

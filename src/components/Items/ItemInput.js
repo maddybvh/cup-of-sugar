@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import 'firebase/storage';
+
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
@@ -14,12 +16,22 @@ const ItemInput = ({ authUser, buttonText, firebase }) => {
 
   const [text, setText] = useState('');
   const [description, setDescription] = useState('');
-  const [image, setImage] = useState(null);
+  const [imageAsFile, setImageAsFile] = useState('');
+  const [imageAsUrl, setImageAsUrl] = useState({
+    imgUrl: '',
+  });
 
   const [radioValue, setRadioValue] = useState('offer');
 
-  const handleSave = () => {
+  // https://dev.to/itnext/how-to-do-image-upload-with-firebase-in-react-cpj
+  const handleImageAsFile = (e) => {
+    const image = e.target.files[0];
+    setImageAsFile((imageFile) => image);
+  };
+
+  const handleSave = (e) => {
     if (text.length > 0) {
+      e.preventDefault();
       handleClose();
       addItemToDb();
     } else {
@@ -37,11 +49,23 @@ const ItemInput = ({ authUser, buttonText, firebase }) => {
       userName: authUser.username,
       type: radioValue,
       zipcode: authUser.zipcode,
+      image: addImage(imageAsFile),
       createdAt: firebase.fieldValue.serverTimestamp(),
     });
 
     setText('');
     setDescription('');
+  };
+
+  const addImage = (imageAsFile) => {
+    if (!imageAsFile) {
+      return '';
+    }
+
+    firebase.storage
+      .ref(`/images/${imageAsFile.name}`)
+      .put(imageAsFile);
+    return `images/${imageAsFile.name}`;
   };
 
   return authUser ? (
@@ -129,7 +153,7 @@ const ItemInput = ({ authUser, buttonText, firebase }) => {
                 type="file"
                 className="form-control-file"
                 id="image"
-                onChange={(e) => setImage(e.currentTarget.value)}
+                onChange={handleImageAsFile}
               />
             </div>
           </Modal.Body>
@@ -140,7 +164,7 @@ const ItemInput = ({ authUser, buttonText, firebase }) => {
             <Button
               variant="success"
               type="submit"
-              onClick={handleSave}
+              onClick={(e) => handleSave(e)}
             >
               Save {radioValue}
             </Button>
