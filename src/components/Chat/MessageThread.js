@@ -10,7 +10,6 @@ const MessageThread = ({ firebase, threadId, currentUser }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Thread ID: ' + threadId);
     firebase.messageThread(threadId).set(
       {
         newMessageText: text,
@@ -19,7 +18,9 @@ const MessageThread = ({ firebase, threadId, currentUser }) => {
         ),
         newMessageAt: firebase.fieldValue.serverTimestamp(),
       },
-      { merge: true },
+      {
+        merge: true,
+      },
     );
 
     firebase.messages(threadId).add({
@@ -32,6 +33,7 @@ const MessageThread = ({ firebase, threadId, currentUser }) => {
   };
 
   let messages = [];
+  // eslint-disable-next-line
   const [value, loading, error] = useCollection(
     firebase.messages(threadId).orderBy('createdAt', 'asc'),
   );
@@ -45,36 +47,47 @@ const MessageThread = ({ firebase, threadId, currentUser }) => {
     );
 
   const reference = firebase.messageThread(threadId);
+  // eslint-disable-next-line
   const [metaData, loadingMeta, errorMeta] = useDocumentDataOnce(
     reference,
   );
 
+  const chatName =
+    metaData?.usernames?.filter(
+      (name) => name !== currentUser.username,
+    ) || currentUser.username;
+
   return (
     <>
-      <div className="row">
-        <Messages messages={messages} currentUser={currentUser} />
-      </div>
-      <form
-        className="form-inline mt-2"
-        onSubmit={(e) => handleSubmit(e)}
-      >
-        <label htmlFor="chatInput" className="sr-only">
-          New message
-        </label>
-        <input
-          type="text"
-          className="form-control col-10"
-          id="chatInput"
-          placeholder="Aa"
-          onChange={(e) => setText(e.target.value)}
-          value={text}
-        />
-        <div className="col-2">
-          <button type="submit" className="btn btn-primary">
-            Send
-          </button>
-        </div>
-      </form>
+      {metaData && (
+        <>
+          <strong>Chat with: {chatName}</strong>
+          <div className="row">
+            <Messages messages={messages} currentUser={currentUser} />
+          </div>
+          <form
+            className="form-inline mt-2"
+            onSubmit={(e) => handleSubmit(e)}
+          >
+            <label htmlFor="chatInput" className="sr-only">
+              New message
+            </label>
+            <input
+              type="text"
+              className="form-control col-10"
+              id="chatInput"
+              placeholder="Aa"
+              onChange={(e) => setText(e.target.value)}
+              value={text}
+            />
+            <div className="col-2">
+              <button type="submit" className="btn btn-primary">
+                Send
+              </button>
+            </div>
+          </form>
+        </>
+      )}
     </>
   );
 };

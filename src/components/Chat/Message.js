@@ -2,7 +2,7 @@ import React from 'react';
 
 export const Message = ({ message, currentUser }) => {
   const getBackgroundColor = () => {
-    if (message.senderId === currentUser.id) {
+    if (message.senderId === currentUser.uid) {
       return 'lightblue';
     } else {
       return 'lightgray';
@@ -10,7 +10,7 @@ export const Message = ({ message, currentUser }) => {
   };
 
   const getClass = () => {
-    if (message.senderId === currentUser.id) {
+    if (message.senderId === currentUser.uid) {
       return 'd-flex flex-row-reverse';
     } else {
       return 'd-flex flex-row';
@@ -21,7 +21,7 @@ export const Message = ({ message, currentUser }) => {
     <>
       <div key={message.uid} className={getClass()}>
         <div
-          className="card mb-1"
+          className="card mb-1 p-2"
           style={{
             backgroundColor: getBackgroundColor(),
           }}

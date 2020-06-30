@@ -16,10 +16,15 @@ export const ThreadPreview = ({
 
   return (
     <button
-      style={{ border: 'solid gray 1px', textAlign: 'left' }}
+      style={{
+        border: 'solid gray 1px',
+        textAlign: 'left',
+        background: 'white',
+        maxWidth: 300,
+      }}
       onClick={handleClick}
     >
-      <strong>{threadName ? threadName : currentUserName}</strong>
+      <div>{threadName ? threadName : currentUserName}</div>
       <div>{thread.newMessageText}</div>
     </button>
   );

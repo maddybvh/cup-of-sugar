@@ -6,10 +6,6 @@ import ThreadList from './ThreadList';
 
 export const Chat = (props) => {
   const authUser = useContext(AuthUserContext);
-  const fromItem = props.location.state?.fromItem;
-  const [recipientName, setRecipientName] = useState(
-    props.location.state?.recipientName,
-  );
   const [recipientId, setRecipientId] = useState(
     props.location.state?.recipientId,
   );
@@ -18,7 +14,7 @@ export const Chat = (props) => {
   );
 
   return (
-    <>
+    <div className="container mh-100%">
       <h1>chat</h1>
       <div className="row">
         <div className="col-sm-4">
@@ -39,7 +35,7 @@ export const Chat = (props) => {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

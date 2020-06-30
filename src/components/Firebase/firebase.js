@@ -2,7 +2,7 @@ import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/storage';
 import 'firebase/firestore';
-import { firebaseConfig, storage } from '../../constants/secrets';
+import { firebaseConfig } from '../../constants/secrets';
 
 class Firebase {
   constructor() {

@@ -32,7 +32,7 @@ const ThreadList = ({
       {error && <strong>Error: {JSON.stringify(error)}</strong>}
       {loading && <span>Loading chats...</span>}
       {threads && (
-        <span>
+        <span className="row">
           {threads.map((thread) => (
             <ThreadPreview
               thread={thread}
@@ -43,6 +43,7 @@ const ThreadList = ({
           ))}
         </span>
       )}
+      <span className="row">Additional chats will show up here.</span>
     </div>
   );
 };

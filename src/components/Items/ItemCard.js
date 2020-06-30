@@ -27,6 +27,7 @@ const ItemCard = ({
     setEditMode(false);
   };
 
+  // eslint-disable-next-line
   const [downloadUrl, loadingImage, errorImage] = useDownloadURL(
     item?.image && item.image ? firebase.image(item.image) : '',
   );
