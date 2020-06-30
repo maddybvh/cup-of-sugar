@@ -1,13 +1,26 @@
 import React from 'react';
 
-export const ThreadPreview = ({ thread, currentUserName }) => {
+export const ThreadPreview = ({
+  thread,
+  currentUserName,
+  setThreadId,
+}) => {
   const threadName = thread?.usernames?.filter(
-    (name) => name != currentUserName,
+    (name) => name !== currentUserName,
   );
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    setThreadId(thread.uid);
+  };
+
   return (
-    <div style={{ border: 'solid gray 1px' }}>
-      <div>{threadName ? threadName : currentUserName}</div>
+    <button
+      style={{ border: 'solid gray 1px', textAlign: 'left' }}
+      onClick={handleClick}
+    >
+      <strong>{threadName ? threadName : currentUserName}</strong>
       <div>{thread.newMessageText}</div>
-    </div>
+    </button>
   );
 };

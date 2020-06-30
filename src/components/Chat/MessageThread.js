@@ -1,47 +1,63 @@
 import React, { useState } from 'react';
+import { useCollection } from 'react-firebase-hooks/firestore';
+import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
 
 import { withFirebase } from '../Firebase';
+import { Messages } from './Messages';
 
-const MessageThread = ({
-  senderName,
-  senderId,
-  recipientName,
-  recipientId,
-  firebase,
-}) => {
+const MessageThread = ({ firebase, threadId, currentUser }) => {
   const [text, setText] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    firebase.messageThread(getThreadId(senderId, recipientId)).set(
+    console.log('Thread ID: ' + threadId);
+    firebase.messageThread(threadId).set(
       {
-        userIds: [senderId, recipientId], //@todo probably want to move this out of here since it's repetative.
-        userNames: [senderName, recipientName],
         newMessageText: text,
-        newMessageFor: recipientId,
+        newMessageFor: metaData.userIds.filter(
+          (id) => id !== currentUser.uid,
+        ),
         newMessageAt: firebase.fieldValue.serverTimestamp(),
       },
       { merge: true },
     );
 
-    firebase.messages(getThreadId(senderId, recipientId)).add({
+    firebase.messages(threadId).add({
       text: text,
-      senderId: senderId,
+      senderId: currentUser.uid,
       createdAt: firebase.fieldValue.serverTimestamp(),
     });
 
     setText('');
   };
 
+  let messages = [];
+  const [value, loading, error] = useCollection(
+    firebase.messages(threadId).orderBy('createdAt', 'asc'),
+  );
+
+  value &&
+    value.docs.forEach((doc) =>
+      messages.push({
+        ...doc.data(),
+        uid: doc.id,
+      }),
+    );
+
+  const reference = firebase.messageThread(threadId);
+  const [metaData, loadingMeta, errorMeta] = useDocumentDataOnce(
+    reference,
+  );
+
   return (
     <>
-      <div
-        className="row"
-        style={{ background: 'lightblue', minHeight: 200 }}
-      >
-        chats go here
+      <div className="row">
+        <Messages messages={messages} currentUser={currentUser} />
       </div>
-      <form className="form-inline mt-2" onSubmit={handleSubmit}>
+      <form
+        className="form-inline mt-2"
+        onSubmit={(e) => handleSubmit(e)}
+      >
         <label htmlFor="chatInput" className="sr-only">
           New message
         </label>
@@ -64,7 +80,3 @@ const MessageThread = ({
 };
 
 export default withFirebase(MessageThread);
-
-const getThreadId = (uid1, uid2) => {
-  return uid1 > uid2 ? uid1 + uid2 : uid2 + uid1;
-};
