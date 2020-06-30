@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { withFirebase } from '../Firebase';
 
 const MessageThread = ({
+  senderName,
   senderId,
   recipientName,
   recipientId,
@@ -14,7 +15,8 @@ const MessageThread = ({
     e.preventDefault();
     firebase.messageThread(getThreadId(senderId, recipientId)).set(
       {
-        users: [senderId, recipientId],
+        userIds: [senderId, recipientId], //@todo probably want to move this out of here since it's repetative.
+        userNames: [senderName, recipientName],
         newMessageText: text,
         newMessageFor: recipientId,
         newMessageAt: firebase.fieldValue.serverTimestamp(),
