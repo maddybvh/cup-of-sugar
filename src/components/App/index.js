@@ -10,6 +10,7 @@ import MyShares from '../MyShares';
 import AccountPage from '../Account';
 import AdminPage from '../Admin';
 import ItemPage from '../Items/ItemPage';
+import { Chat } from '../Chat';
 
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
@@ -30,6 +31,7 @@ const App = () => (
       <Route path={ROUTES.ACCOUNT} component={AccountPage} />
       <Route path={ROUTES.ADMIN} component={AdminPage} />
       <Route path="/i/:uid" component={ItemPage} />
+      <Route path={ROUTES.CHAT} component={Chat} />
     </div>
   </Router>
 );

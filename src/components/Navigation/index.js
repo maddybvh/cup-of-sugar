@@ -39,6 +39,11 @@ const NavigationAuth = ({ authUser }) => {
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
+        <Nav.Link eventKey={ROUTES.CHAT} href={ROUTES.CHAT}>
+          Chat
+        </Nav.Link>
+      </Nav.Item>
+      <Nav.Item>
         <Nav.Link eventKey={ROUTES.ACCOUNT} href={ROUTES.ACCOUNT}>
           Account
         </Nav.Link>

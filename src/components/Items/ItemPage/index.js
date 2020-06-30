@@ -5,6 +5,7 @@ import { useDownloadURL } from 'react-firebase-hooks/storage';
 import { withFirebase } from '../../Firebase';
 import { AuthUserContext } from '../../Session';
 import ItemComments from './ItemComments';
+import { MessageCta } from '../../Chat/MessageCta';
 
 const ItemPage = (props) => {
   const uid = window.location.pathname.split('/')[2];
@@ -39,6 +40,7 @@ const ItemPage = (props) => {
                 (Edited)
               </span>
             )}
+            <MessageCta recipient={item.userName} />
           </span>
           {item.description && (
             <div className="mt-4 mb-4">{item.description}</div>
