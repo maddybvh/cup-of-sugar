@@ -12,7 +12,11 @@ const SignInPage = () => (
     <h1>Sign In</h1>
     <SignInForm />
     <PasswordForgetLink />
-    <div class="btn-group" role="group" aria-label="Basic example">
+    <div
+      className="btn-group"
+      role="group"
+      aria-label="Basic example"
+    >
       <SignInGoogle />
       <SignInFacebook />
       <SignInTwitter />
@@ -72,26 +76,32 @@ class SignInFormBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit} className="form-group">
-        <div class="form-group row">
-          <label for="colFormLabel" class="col-sm-2 col-form-label">
+        <div className="form-group row">
+          <label
+            for="colFormLabel"
+            className="col-sm-2 col-form-label"
+          >
             Email
           </label>
-          <div class="col-sm-10">
+          <div className="col-sm-10">
             <input
               name="email"
               value={email}
               onChange={this.onChange}
               placeholder="Email Address"
               type="email"
-              class="form-control d-inline"
+              className="form-control d-inline"
             />
           </div>
         </div>
-        <div class="form-group row">
-          <label for="colFormLabel" class="col-sm-2 col-form-label">
+        <div className="form-group row">
+          <label
+            for="colFormLabel"
+            className="col-sm-2 col-form-label"
+          >
             Password
           </label>
-          <div class="col-sm-10">
+          <div className="col-sm-10">
             <input
               name="password"
               value={password}

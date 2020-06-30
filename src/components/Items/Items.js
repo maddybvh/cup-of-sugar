@@ -8,7 +8,7 @@ import ItemList from './ItemList';
 const Items = (props) => {
   const authUser = useContext(AuthUserContext);
   let items = [];
-  const limit = 10;
+  const limit = 50;
   const zipcodesFromProps =
     props.zipcodesToSearch?.length > 0
       ? props.zipcodesToSearch
@@ -29,34 +29,34 @@ const Items = (props) => {
         query = query
           .where('type', '==', 'offer')
           .where('userId', '==', authUser.uid)
-          .orderBy('createdAt', 'asc')
+          .orderBy('createdAt', 'desc')
           .limit(limit);
         break;
       case 'myRequests':
         query = query
           .where('type', '==', 'request')
           .where('userId', '==', authUser.uid)
-          .orderBy('createdAt', 'asc')
+          .orderBy('createdAt', 'desc')
           .limit(limit);
         break;
       case 'allRequests':
         query = query
           .where('type', '==', 'request')
           .where('zipcode', 'in', zipcodes)
-          .orderBy('createdAt', 'asc')
+          .orderBy('createdAt', 'desc')
           .limit(limit);
         break;
       case 'allOffers':
         query = query
           .where('type', '==', 'offer')
           .where('zipcode', 'in', zipcodes)
-          .orderBy('createdAt', 'asc')
+          .orderBy('createdAt', 'desc')
           .limit(limit);
         break;
       default:
         query = query
           .where('type', '==', 'request')
-          .orderBy('createdAt', 'asc')
+          .orderBy('createdAt', 'desc')
           .limit(limit);
         break;
     }
@@ -142,7 +142,7 @@ const Items = (props) => {
   return (
     <AuthUserContext.Consumer>
       {(authUser) => (
-        <div>
+        <div className="mb-4 mt-2">
           {loading && <div>Loading ...</div>}
           {error && <div>Error accessing Firestore: {error}</div>}
           {items && (

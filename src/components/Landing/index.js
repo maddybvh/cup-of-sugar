@@ -10,7 +10,7 @@ const Landing = () => {
   return (
     <AuthUserContext.Consumer>
       {(authUser) => (
-        <>
+        <div className="container mb-4">
           <ItemInput
             authUser={authUser}
             buttonText="Add an offer or request"
@@ -36,7 +36,7 @@ const Landing = () => {
             type="offer"
             zipcodesToSearch={zipcodesToSearch}
           />
-        </>
+        </div>
       )}
     </AuthUserContext.Consumer>
   );

@@ -23,40 +23,52 @@ const ItemPage = (props) => {
       {item && (
         <>
           <h1>{item.text}</h1>
-          <span>
-            {item.type === 'request' && (
-              <span className="badge badge-info"> {item.type}</span>
-            )}
-            {item.type === 'offer' && (
-              <span className="badge badge-success">{item.type}</span>
-            )}
-            {item.userName && (
-              <span className="badge" style={{ color: 'gray' }}>
-                by {item.userName}
-              </span>
-            )}
-            {item.editedAt && (
-              <span className="font-weight-light pl-2 pr-2">
-                (Edited)
-              </span>
-            )}
-            <MessageCta
-              recipientName={item.userName}
-              recipientId={item.userId}
-            />
+          <span className="row">
+            <span className="col-sm-8">
+              {item.type === 'request' && (
+                <span className="badge badge-info"> {item.type}</span>
+              )}
+              {item.type === 'offer' && (
+                <span className="badge badge-success">
+                  {item.type}
+                </span>
+              )}
+              {item.userName && (
+                <span className="badge" style={{ color: 'gray' }}>
+                  by {item.userName}
+                </span>
+              )}
+              {item.editedAt && (
+                <span className="font-weight-light pl-2 pr-2">
+                  (Edited)
+                </span>
+              )}
+            </span>
+            <span className="col-sm-4">
+              <MessageCta
+                recipientName={item.userName}
+                recipientId={item.userId}
+              />
+            </span>
           </span>
-          {item.description && (
-            <div className="mt-4 mb-4">{item.description}</div>
-          )}
-          {downloadUrl && (
-            <img
-              src={downloadUrl}
-              className="img-fluid m-2"
-              alt={item.text}
-            />
-          )}
-          {loadingImage && <div>Image is loading</div>}
-          {errorImage && <div>{errorImage}</div>}
+          <div className="row mt-3">
+            <div className="col-sm-8">
+              {item.description && (
+                <div className="mt-4 mb-4">{item.description}</div>
+              )}
+            </div>
+            <div className="col-sm-4">
+              {downloadUrl && (
+                <img
+                  src={downloadUrl}
+                  className="img-fluid m-2"
+                  alt={item.text}
+                />
+              )}
+              {loadingImage && <div>Image is loading</div>}
+              {errorImage && <div>{errorImage}</div>}
+            </div>
+          </div>
         </>
       )}
       {loading && <div>Loading...</div>}

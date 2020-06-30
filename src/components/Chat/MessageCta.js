@@ -14,7 +14,7 @@ export const MessageCta = ({ recipientName, recipientId }) => (
       },
     }}
   >
-    <button type="button" className="btn btn-primary float-right">
+    <button type="button" className="btn btn-primary">
       Message {recipientName}
     </button>
   </Link>

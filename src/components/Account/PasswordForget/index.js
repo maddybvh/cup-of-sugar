@@ -49,8 +49,8 @@ class PasswordForgetFormBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit} className="form-group">
-        <div class="row">
-          <div class="col">
+        <div className="row">
+          <div className="col">
             <input
               name="email"
               value={this.state.email}
@@ -60,7 +60,7 @@ class PasswordForgetFormBase extends Component {
               className="form-control"
             />
           </div>
-          <div class="col">
+          <div className="col">
             <button
               disabled={isInvalid}
               type="submit"

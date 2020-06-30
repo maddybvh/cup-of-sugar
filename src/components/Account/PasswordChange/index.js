@@ -41,7 +41,7 @@ class PasswordChangeForm extends Component {
       passwordOne !== passwordTwo || passwordOne === '';
 
     return (
-      <form onSubmit={this.onSubmit} class="form-group">
+      <form onSubmit={this.onSubmit} className="form-group">
         <div className="row">
           <label className="col">Reset password: </label>
           <input
