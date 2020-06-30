@@ -127,15 +127,24 @@ class Firebase {
   // *** Comment API ***
 
   comment = (itemUid, commentUid) =>
-    this.db.doc(`items/${itemUid}`).doc(`coments/${commentUid}`);
+    this.db.doc(`items/${itemUid}`).doc(`comments/${commentUid}`);
 
   comments = (itemUid) =>
     this.db.doc(`items/${itemUid}`).collection('comments');
 
   // *** Images API ***
-  storage = this.storage;
 
   image = (pathToImage) => this.storage.ref(`/${pathToImage}`);
+
+  // *** Messages API ***
+
+  messages = (threadUid) =>
+    this.db.doc(`messageThreads/${threadUid}`).collection('messages');
+
+  messageThread = (threadUid) =>
+    this.db.doc(`messageThreads/${threadUid}`);
+
+  messageThreads = () => this.db.collection('messageThreads');
 }
 
 export default Firebase;

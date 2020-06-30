@@ -40,7 +40,10 @@ const ItemPage = (props) => {
                 (Edited)
               </span>
             )}
-            <MessageCta recipient={item.userName} />
+            <MessageCta
+              recipientName={item.userName}
+              recipientId={item.userId}
+            />
           </span>
           {item.description && (
             <div className="mt-4 mb-4">{item.description}</div>

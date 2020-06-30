@@ -42,5 +42,14 @@ service cloud.firestore {
     }
     }
     
+    //@todo need to tighten these up so that only the users involved in the chat have access.
+    match /messageThreads/{threadUid} {
+        allow read, create, update: if signedIn();
+        
+        match /messages/{messageId} {
+        		allow read, create: if signedIn()
+    }
+    }
+    
 }
 }
