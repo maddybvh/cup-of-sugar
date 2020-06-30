@@ -95,6 +95,10 @@ const Items = (props) => {
   let [value4, loading4, error4] = useCollection(query[4]);
   // eslint-disable-next-line
   let [value5, loading5, error5] = useCollection(query[5]);
+  // eslint-disable-next-line
+  let [value6, loading6, error6] = useCollection(query[6]);
+  // eslint-disable-next-line
+  let [value7, loading7, error7] = useCollection(query[7]);
 
   value &&
     value.docs.forEach((doc) =>
@@ -133,6 +137,20 @@ const Items = (props) => {
     );
   value5 &&
     value5.docs.forEach((doc) =>
+      items.push({
+        ...doc.data(),
+        uid: doc.id,
+      }),
+    );
+  value6 &&
+    value6.docs.forEach((doc) =>
+      items.push({
+        ...doc.data(),
+        uid: doc.id,
+      }),
+    );
+  value7 &&
+    value7.docs.forEach((doc) =>
       items.push({
         ...doc.data(),
         uid: doc.id,
