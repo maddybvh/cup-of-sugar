@@ -12,6 +12,7 @@ export const MessageCta = withFirebase(
       firebase.messageThread(threadId).set(
         {
           newMessageAt: firebase.fieldValue.serverTimestamp(),
+          users: [currentUserId, recipientId],
         },
         {
           merge: true,
