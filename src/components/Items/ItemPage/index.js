@@ -53,6 +53,7 @@ const ItemPage = (props) => {
                         recipientName={item.userName}
                         recipientId={item.userId}
                         currentUserId={authUser.uid}
+                        currentUserName={authUser.username}
                       />
                     )}
                   </>

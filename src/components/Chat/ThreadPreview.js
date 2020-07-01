@@ -5,9 +5,13 @@ export const ThreadPreview = ({
   currentUserName,
   setThreadId,
 }) => {
-  const threadName = thread?.usernames?.filter(
+  let threadName = thread?.userNames?.filter(
     (name) => name !== currentUserName,
   );
+
+  if (threadName?.length === 0) {
+    threadName = ['Me'];
+  }
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -15,17 +19,21 @@ export const ThreadPreview = ({
   };
 
   return (
-    <button
-      style={{
-        border: 'solid gray 1px',
-        textAlign: 'left',
-        background: 'white',
-        maxWidth: 300,
-      }}
-      onClick={handleClick}
-    >
-      <div>{threadName ? threadName : currentUserName}</div>
-      <div>{thread.newMessageText}</div>
-    </button>
+    <div>
+      <button
+        style={{
+          border: '0',
+          textAlign: 'left',
+          background: 'white',
+        }}
+        onClick={handleClick}
+      >
+        <div style={{ fontWeight: 'bold' }}>{threadName}</div>
+        <div style={{ fontSize: 14, color: 'gray' }}>
+          {thread.newMessageText}
+        </div>
+      </button>
+      <br />
+    </div>
   );
 };

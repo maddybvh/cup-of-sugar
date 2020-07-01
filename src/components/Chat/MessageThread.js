@@ -1,37 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
 
 import { withFirebase } from '../Firebase';
 import { Messages } from './Messages';
+import { MessageInput } from './MessageInput';
 
 const MessageThread = ({ firebase, threadId, currentUser }) => {
-  const [text, setText] = useState('');
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    firebase.messageThread(threadId).set(
-      {
-        newMessageText: text,
-        newMessageFor: metaData.userIds.filter(
-          (id) => id !== currentUser.uid,
-        ),
-        newMessageAt: firebase.fieldValue.serverTimestamp(),
-      },
-      {
-        merge: true,
-      },
-    );
-
-    firebase.messages(threadId).add({
-      text: text,
-      senderId: currentUser.uid,
-      createdAt: firebase.fieldValue.serverTimestamp(),
-    });
-
-    setText('');
-  };
-
   let messages = [];
   // eslint-disable-next-line
   const [value, loading, error] = useCollection(
@@ -52,43 +27,26 @@ const MessageThread = ({ firebase, threadId, currentUser }) => {
     reference,
   );
 
-  const chatName =
-    metaData?.usernames?.filter(
-      (name) => name !== currentUser.username,
-    ) || currentUser.username;
+  let chatName = metaData?.userNames?.filter(
+    (name) => name !== currentUser.username,
+  );
+
+  if (chatName?.length === 0) {
+    chatName = ['Me'];
+  }
 
   return (
     <>
       {metaData && (
-        <>
-          <strong>{chatName}</strong>
-          <div className="row">
-            <Messages messages={messages} currentUser={currentUser} />
-          </div>
-          <div className="fixed-bottom mw-100 position-relative">
-            <form
-              className="form-inline mt-2"
-              onSubmit={(e) => handleSubmit(e)}
-            >
-              <label htmlFor="chatInput" className="sr-only">
-                New message
-              </label>
-              <input
-                type="text"
-                className="form-control col-10"
-                id="chatInput"
-                placeholder="Aa"
-                onChange={(e) => setText(e.target.value)}
-                value={text}
-              />
-              <div className="col-2">
-                <button type="submit" className="btn btn-primary">
-                  Send
-                </button>
-              </div>
-            </form>
-          </div>
-        </>
+        <div className="d-flex flex-column flex-column justify-content-between">
+          <h2 className="text-center">{chatName}</h2>
+          <Messages messages={messages} currentUser={currentUser} />
+          <MessageInput
+            threadId={threadId}
+            users={metaData.users}
+            currentUser={currentUser}
+          />
+        </div>
       )}
     </>
   );

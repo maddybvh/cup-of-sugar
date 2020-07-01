@@ -5,7 +5,13 @@ import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
 export const MessageCta = withFirebase(
-  ({ recipientName, recipientId, currentUserId, firebase }) => {
+  ({
+    recipientName,
+    recipientId,
+    currentUserId,
+    currentUserName,
+    firebase,
+  }) => {
     const threadId = getThreadId(recipientId, currentUserId);
 
     const handleClick = () => {
@@ -13,6 +19,8 @@ export const MessageCta = withFirebase(
         {
           newMessageAt: firebase.fieldValue.serverTimestamp(),
           users: [currentUserId, recipientId],
+          userNames: [recipientName, currentUserName],
+          uid: threadId,
         },
         {
           merge: true,

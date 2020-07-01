@@ -30,18 +30,18 @@ const ThreadList = ({
       {error && <strong>Error: {JSON.stringify(error)}</strong>}
       {loading && <span>Loading chats...</span>}
       {threads && (
-        <span className="row">
+        <>
           {threads.map((thread) => (
-            <ThreadPreview
-              thread={thread}
-              key={thread.uid}
-              currentUserName={currentUserName}
-              setThreadId={setThreadId}
-            />
+            <span className="row" key={thread.uid}>
+              <ThreadPreview
+                thread={thread}
+                currentUserName={currentUserName}
+                setThreadId={setThreadId}
+              />
+            </span>
           ))}
-        </span>
+        </>
       )}
-      <span className="row">Additional chats will show up here.</span>
     </div>
   );
 };

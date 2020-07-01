@@ -3,9 +3,9 @@ import React from 'react';
 export const Message = ({ message, currentUser }) => {
   const getBackgroundColor = () => {
     if (message.senderId === currentUser.uid) {
-      return 'blue';
+      return '#007BFF';
     } else {
-      return 'lightgray';
+      return '#e3e3e3';
     }
   };
 

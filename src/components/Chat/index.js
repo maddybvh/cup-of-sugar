@@ -12,29 +12,20 @@ export const Chat = (props) => {
   const [threadId, setThreadId] = useState(initialThreadId);
 
   return (
-    <div className="h-100">
-      <h1>chat</h1>
-      <div className="row h-100">
-        <div className="col-sm-4">
-          <ThreadList
-            currentUserId={authUser.uid}
-            currentUserName={authUser.username}
-            setThreadId={setThreadId}
-          />
-        </div>
-        <div className="col-sm-8 h-100">
-          {threadId && (
-            <MessageThread
-              threadId={threadId}
-              currentUser={authUser}
-            />
-          )}
-        </div>
+    <div className="row">
+      <div className="col-sm-4">
+        <h1>chat</h1>
+        <ThreadList
+          currentUserId={authUser.uid}
+          currentUserName={authUser.username}
+          setThreadId={setThreadId}
+        />
+      </div>
+      <div className="col-sm-8">
+        {threadId && (
+          <MessageThread threadId={threadId} currentUser={authUser} />
+        )}
       </div>
     </div>
   );
-};
-
-const getThreadId = (uid1, uid2) => {
-  return uid1 > uid2 ? uid1 + uid2 : uid2 + uid1;
 };
