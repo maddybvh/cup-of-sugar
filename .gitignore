@@ -31,3 +31,6 @@ yarn-error.log*
 .firebase
 .firebaserc
 /src/constants/secrets.js
+
+# Local Netlify folder
+.netlify

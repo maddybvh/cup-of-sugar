@@ -3,9 +3,17 @@ import React from 'react';
 export const Message = ({ message, currentUser }) => {
   const getBackgroundColor = () => {
     if (message.senderId === currentUser.uid) {
-      return 'lightblue';
+      return 'blue';
     } else {
       return 'lightgray';
+    }
+  };
+
+  const getColor = () => {
+    if (message.senderId === currentUser.uid) {
+      return 'white';
+    } else {
+      return 'black';
     }
   };
 
@@ -24,6 +32,8 @@ export const Message = ({ message, currentUser }) => {
           className="card mb-1 p-2"
           style={{
             backgroundColor: getBackgroundColor(),
+            color: getColor(),
+            borderRadius: 20,
           }}
         >
           <div>{message.text}</div>

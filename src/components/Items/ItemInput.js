@@ -15,6 +15,7 @@ const ItemInput = ({ authUser, buttonText, firebase }) => {
   const handleShow = () => setShow(true);
 
   const [text, setText] = useState('');
+  const [zipcode, setZipcode] = useState('');
   const [description, setDescription] = useState('');
   const [imageAsFile, setImageAsFile] = useState('');
 
@@ -45,7 +46,7 @@ const ItemInput = ({ authUser, buttonText, firebase }) => {
       userId: authUser.uid,
       userName: authUser.username,
       type: radioValue,
-      zipcode: authUser.zipcode,
+      zipcode: zipcode,
       image: addImage(imageAsFile),
       createdAt: firebase.fieldValue.serverTimestamp(),
     });
@@ -131,6 +132,19 @@ const ItemInput = ({ authUser, buttonText, firebase }) => {
                 type="text"
                 placeholder="A short description"
                 onChange={(e) => setText(e.currentTarget.value)}
+              ></input>
+              <label htmlFor="zipcode" className="sr-only">
+                Zipcode
+              </label>
+              <input
+                id="zip"
+                name="zip"
+                type="text"
+                inputMode="numeric"
+                pattern="^(^00000(|-0000))|(\d{5}(|-\d{4}))$"
+                className="form-control w-50 mt-2"
+                placeholder="5 digit zip code"
+                onChange={(e) => setZipcode(e.currentTarget.value)}
               ></input>
               <label htmlFor="description" className="mt-4">
                 Additional description (optional)
