@@ -8,3 +8,9 @@
 - `yarn`
 - `yarn start`
 - visit http://localhost:3000
+
+## Deployment
+
+- Install [Netlify CLI tools](https://docs.netlify.com/cli/get-started)
+- `yarn build`
+- `netlify deploy`
