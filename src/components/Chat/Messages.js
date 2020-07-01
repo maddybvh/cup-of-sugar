@@ -5,10 +5,11 @@ export const Messages = ({ messages, currentUser }) => (
   //Order of divs is important.
   <div
     style={{
-      maxHeight: 400,
+      height: 'calc(100vh - 200px)',
       overflowY: 'auto',
       display: 'flex',
       flexDirection: 'column-reverse',
+      padding: 10,
     }}
   >
     <div>
