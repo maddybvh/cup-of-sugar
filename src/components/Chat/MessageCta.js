@@ -24,9 +24,9 @@ export const MessageCta = withFirebase(
         to={{
           pathname: ROUTES.CHAT,
           state: {
-            fromItem: true,
             recipientName: recipientName,
             recipientId: recipientId,
+            threadId: threadId,
           },
         }}
       >

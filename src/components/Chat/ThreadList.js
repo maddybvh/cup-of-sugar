@@ -5,12 +5,10 @@ import { withFirebase } from '../Firebase';
 import { ThreadPreview } from './ThreadPreview';
 
 const ThreadList = ({
-  recipientId,
   currentUserId,
   currentUserName,
   firebase,
   setThreadId,
-  setRecipientId,
 }) => {
   let threads = [];
   const [value, loading, error] = useCollection(

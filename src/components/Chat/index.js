@@ -6,21 +6,17 @@ import ThreadList from './ThreadList';
 
 export const Chat = (props) => {
   const authUser = useContext(AuthUserContext);
-  const [recipientId, setRecipientId] = useState(
-    props.location.state?.recipientId,
-  );
-  const [threadId, setThreadId] = useState(
-    getThreadId(authUser.uid, recipientId),
-  );
+
+  const initialThreadId = props.location.state?.threadId || '';
+
+  const [threadId, setThreadId] = useState(initialThreadId);
 
   return (
-    <div className="container mh-100%">
+    <div className="container h-100">
       <h1>chat</h1>
       <div className="row">
         <div className="col-sm-4">
           <ThreadList
-            recipientId={recipientId}
-            setRecipientId={setRecipientId}
             currentUserId={authUser.uid}
             currentUserName={authUser.username}
             setThreadId={setThreadId}

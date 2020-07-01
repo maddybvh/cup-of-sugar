@@ -47,11 +47,15 @@ const ItemPage = (props) => {
             <span className="col-sm-4">
               <AuthUserContext.Consumer>
                 {(authUser) => (
-                  <MessageCta
-                    recipientName={item.userName}
-                    recipientId={item.userId}
-                    currentUserId={authUser.uid}
-                  />
+                  <>
+                    {authUser.uid !== item.userId && (
+                      <MessageCta
+                        recipientName={item.userName}
+                        recipientId={item.userId}
+                        currentUserId={authUser.uid}
+                      />
+                    )}
+                  </>
                 )}
               </AuthUserContext.Consumer>
             </span>
