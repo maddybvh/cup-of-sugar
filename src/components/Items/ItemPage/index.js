@@ -45,10 +45,15 @@ const ItemPage = (props) => {
               )}
             </span>
             <span className="col-sm-4">
-              <MessageCta
-                recipientName={item.userName}
-                recipientId={item.userId}
-              />
+              <AuthUserContext.Consumer>
+                {(authUser) => (
+                  <MessageCta
+                    recipientName={item.userName}
+                    recipientId={item.userId}
+                    currentUserId={authUser.uid}
+                  />
+                )}
+              </AuthUserContext.Consumer>
             </span>
           </span>
           <div className="row mt-3">
