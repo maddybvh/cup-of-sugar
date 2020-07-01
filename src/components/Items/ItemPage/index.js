@@ -48,12 +48,12 @@ const ItemPage = (props) => {
               <AuthUserContext.Consumer>
                 {(authUser) => (
                   <>
-                    {authUser.uid !== item.userId && (
+                    {authUser && authUser?.uid !== item.userId && (
                       <MessageCta
                         recipientName={item.userName}
                         recipientId={item.userId}
-                        currentUserId={authUser.uid}
-                        currentUserName={authUser.username}
+                        currentUserId={authUser?.uid}
+                        currentUserName={authUser?.username}
                       />
                     )}
                   </>
