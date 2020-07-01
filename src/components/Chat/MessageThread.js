@@ -61,31 +61,33 @@ const MessageThread = ({ firebase, threadId, currentUser }) => {
     <>
       {metaData && (
         <>
-          <strong>Chat with: {chatName}</strong>
+          <strong>{chatName}</strong>
           <div className="row">
             <Messages messages={messages} currentUser={currentUser} />
           </div>
-          <form
-            className="form-inline mt-2"
-            onSubmit={(e) => handleSubmit(e)}
-          >
-            <label htmlFor="chatInput" className="sr-only">
-              New message
-            </label>
-            <input
-              type="text"
-              className="form-control col-10"
-              id="chatInput"
-              placeholder="Aa"
-              onChange={(e) => setText(e.target.value)}
-              value={text}
-            />
-            <div className="col-2">
-              <button type="submit" className="btn btn-primary">
-                Send
-              </button>
-            </div>
-          </form>
+          <div className="fixed-bottom mw-100 position-relative">
+            <form
+              className="form-inline mt-2"
+              onSubmit={(e) => handleSubmit(e)}
+            >
+              <label htmlFor="chatInput" className="sr-only">
+                New message
+              </label>
+              <input
+                type="text"
+                className="form-control col-10"
+                id="chatInput"
+                placeholder="Aa"
+                onChange={(e) => setText(e.target.value)}
+                value={text}
+              />
+              <div className="col-2">
+                <button type="submit" className="btn btn-primary">
+                  Send
+                </button>
+              </div>
+            </form>
+          </div>
         </>
       )}
     </>

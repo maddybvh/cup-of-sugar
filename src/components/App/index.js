@@ -16,8 +16,8 @@ import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
 
 const App = () => (
-  <Router>
-    <div className="container-lg">
+  <div className="container-lg">
+    <Router>
       <Navigation />
 
       <Route exact path={ROUTES.LANDING} component={LandingPage} />
@@ -32,8 +32,8 @@ const App = () => (
       <Route path={ROUTES.ADMIN} component={AdminPage} />
       <Route path="/i/:uid" component={ItemPage} />
       <Route path={ROUTES.CHAT} component={Chat} />
-    </div>
-  </Router>
+    </Router>
+  </div>
 );
 
 export default withAuthentication(App);

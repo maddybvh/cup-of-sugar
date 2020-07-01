@@ -25,3 +25,7 @@
 .short-input {
   max-width: 200;
 }
+
+body > #root > div {
+  height: 100vh;
+}

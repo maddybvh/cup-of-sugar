@@ -12,9 +12,9 @@ export const Chat = (props) => {
   const [threadId, setThreadId] = useState(initialThreadId);
 
   return (
-    <div className="container h-100">
+    <div className="h-100">
       <h1>chat</h1>
-      <div className="row">
+      <div className="row h-100">
         <div className="col-sm-4">
           <ThreadList
             currentUserId={authUser.uid}
@@ -22,7 +22,7 @@ export const Chat = (props) => {
             setThreadId={setThreadId}
           />
         </div>
-        <div className="col-sm-8">
+        <div className="col-sm-8 h-100">
           {threadId && (
             <MessageThread
               threadId={threadId}
