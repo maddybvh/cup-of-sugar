@@ -25,6 +25,9 @@ export const ThreadPreview = ({
           border: '0',
           textAlign: 'left',
           background: 'white',
+          overflow: 'hidden',
+          maxWidth: 250,
+          margin: 10,
         }}
         onClick={handleClick}
       >

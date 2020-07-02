@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
 
 export const Message = ({ message, currentUser }) => {
   const getBackgroundColor = () => {
@@ -36,7 +37,7 @@ export const Message = ({ message, currentUser }) => {
             borderRadius: 20,
           }}
         >
-          <div>{message.text}</div>
+          <ReactMarkdown source={message.text} />
         </div>
       </div>
     </>
