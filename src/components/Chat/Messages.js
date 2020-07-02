@@ -9,7 +9,6 @@ export const Messages = ({ messages, currentUser }) => (
       overflowY: 'auto',
       display: 'flex',
       flexDirection: 'column-reverse',
-      padding: 10,
     }}
   >
     <div>
