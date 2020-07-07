@@ -10,7 +10,7 @@ export const Notification = withFirebase(({ firebase }) => {
   const [user, loading, error] = useDocumentData(reference);
   return (
     <>
-      {user?.chatNotificationNum ? (
+      {user?.chatNotificationNum > 0 ? (
         <div className="d-inline ml-1" style={{ color: '#ed6b6b' }}>
           ({user.chatNotificationNum})
         </div>

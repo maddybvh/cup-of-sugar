@@ -8,6 +8,7 @@ export const ThreadPreview = withFirebase(
     setThreadId,
     currentUserId,
     firebase,
+    threadId,
   }) => {
     const newTotalChats = firebase.fieldValue.increment(
       -1 * thread.newMessageCount,
@@ -33,14 +34,14 @@ export const ThreadPreview = withFirebase(
     };
 
     return (
-      <div>
+      <div className="w-100 p-0 m-0">
         <button
+          className="w-100 p-2 m-0"
           style={{
             border: '0',
             textAlign: 'left',
             background: 'white',
             overflow: 'hidden',
-            maxWidth: 250,
             margin: 10,
           }}
           onClick={handleClick}

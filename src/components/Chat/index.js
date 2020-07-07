@@ -13,12 +13,13 @@ export const Chat = (props) => {
 
   return (
     <div className="row">
-      <div className="col-sm-4">
+      <div className="col-sm-4 border-right">
         <h1>chat</h1>
         <ThreadList
           currentUserId={authUser.uid}
           currentUserName={authUser.username}
           setThreadId={setThreadId}
+          threadId={threadId}
         />
       </div>
       <div className="col-sm-8">

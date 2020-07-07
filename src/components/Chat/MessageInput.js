@@ -53,8 +53,8 @@ export const MessageInput = withFirebase(
             onChange={(e) => setText(e.target.value)}
             value={text}
           />
-          <div className="col-2">
-            <button type="submit" className="btn btn-primary">
+          <div className="col-2 pr-0">
+            <button type="submit" className="btn btn-primary w-100">
               Send
             </button>
           </div>
