@@ -14,7 +14,8 @@ const ThreadList = ({
   const [value, loading, error] = useCollection(
     firebase
       .messageThreads()
-      .where('users', 'array-contains', currentUserId),
+      .where('users', 'array-contains', currentUserId)
+      .orderBy('newMessageAt', 'desc'),
   );
 
   value &&
