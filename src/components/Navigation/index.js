@@ -1,8 +1,11 @@
 import React from 'react';
+import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 import { AuthUserContext } from '../Session';
 import SignOutButton from '../Account/SignOut';
+import { Notification } from '../Notifications/Notification';
 import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
 
@@ -19,69 +22,67 @@ const Navigation = () => (
 );
 
 const NavigationAuth = ({ authUser }) => {
-  const activeKey = window.location.pathname;
-
   return (
-    <Nav
-      className="justify-content-end mt-2 mb-2"
-      activeKey={activeKey}
-      defaultActiveKey="1"
-      variant="tabs"
-    >
-      <Nav.Item>
-        <Nav.Link eventKey={ROUTES.LANDING} href={ROUTES.LANDING}>
-          Explore
-        </Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link eventKey={ROUTES.MYSHARES} href={ROUTES.MYSHARES}>
-          MyShares
-        </Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link eventKey={ROUTES.CHAT} href={ROUTES.CHAT}>
-          Chat
-        </Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link eventKey={ROUTES.ACCOUNT} href={ROUTES.ACCOUNT}>
-          Account
-        </Nav.Link>
-      </Nav.Item>
-      {!!authUser.roles[ROLES.ADMIN] && (
-        <Nav.Item>
-          <Nav.Link eventKey={ROUTES.ADMIN} href={ROUTES.ADMIN}>
-            Admin
+    <Navbar collapseOnSelect expand="md" bg="dark" variant="dark">
+      <Navbar.Brand href={ROUTES.LANDING}>Cup of Sugar</Navbar.Brand>
+      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+      <Navbar.Collapse id="responsive-navbar-nav">
+        <Nav className="ml-auto">
+          <Nav.Link eventKey={ROUTES.LANDING} href={ROUTES.LANDING}>
+            Explore
           </Nav.Link>
-        </Nav.Item>
-      )}
-      <Nav.Item>
-        <SignOutButton />
-      </Nav.Item>
-    </Nav>
+          <Nav.Link eventKey={ROUTES.MYSHARES} href={ROUTES.MYSHARES}>
+            MyShares
+          </Nav.Link>
+          <Nav.Link eventKey={ROUTES.CHAT} href={ROUTES.CHAT}>
+            <div className="d-inline">Chat</div>
+            <Notification className="d-inline" />
+          </Nav.Link>
+          <NavDropdown
+            title={authUser.username}
+            id="collasible-nav-dropdown"
+          >
+            <NavDropdown.Item
+              eventKey={ROUTES.CHAT}
+              href={ROUTES.CHAT}
+            >
+              Account
+            </NavDropdown.Item>
+            {!!authUser.roles[ROLES.ADMIN] && (
+              <NavDropdown.Item
+                eventKey={ROUTES.ADMIN}
+                href={ROUTES.ADMIN}
+              >
+                Admin
+              </NavDropdown.Item>
+            )}
+            <NavDropdown.Divider />
+            <NavDropdown.Item>
+              <SignOutButton />
+            </NavDropdown.Item>
+          </NavDropdown>
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
   );
 };
 
 const NavigationNonAuth = () => {
-  const activeKey = window.location.pathname;
   return (
-    <Nav
-      className="justify-content-end mt-2 mb-2"
-      activeKey={activeKey}
-      defaultActiveKey="1"
-      variant="tabs"
-    >
-      <Nav.Item>
-        <Nav.Link eventKey={ROUTES.LANDING} href={ROUTES.LANDING}>
-          Explore
-        </Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link eventKey={ROUTES.SIGN_IN} href={ROUTES.SIGN_IN}>
-          Sign in to share
-        </Nav.Link>
-      </Nav.Item>
-    </Nav>
+    <Navbar collapseOnSelect expand="md" bg="dark" variant="dark">
+      <Navbar.Brand href={ROUTES.LANDING}>Cup of Sugar</Navbar.Brand>
+      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+      <Navbar.Collapse id="responsive-navbar-nav">
+        <Nav className="ml-auto">
+          <Nav.Link eventKey={ROUTES.LANDING} href={ROUTES.LANDING}>
+            Explore
+          </Nav.Link>
+          <Nav.Link eventKey={ROUTES.SIGN_IN} href={ROUTES.SIGN_IN}>
+            Sign in to share
+          </Nav.Link>
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
   );
 };
 
