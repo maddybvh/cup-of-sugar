@@ -3,14 +3,19 @@ import { withFirebase } from '../Firebase';
 
 export const MessageInput = withFirebase(
   ({ threadId, users, currentUser, firebase }) => {
+    const recipientId = users.filter(
+      (id) => id !== currentUser.uid,
+    )[0];
     const [text, setText] = useState('');
+
+    const increment = firebase.fieldValue.increment(1);
 
     const handleSubmit = (e) => {
       e.preventDefault();
       firebase.messageThread(threadId).set(
         {
           newMessageText: text,
-          newMessageFor: users.filter((id) => id !== currentUser.uid),
+          newMessageFor: recipientId,
           newMessageAt: firebase.fieldValue.serverTimestamp(),
         },
         {
@@ -21,6 +26,10 @@ export const MessageInput = withFirebase(
         text: text,
         senderId: currentUser.uid,
         createdAt: firebase.fieldValue.serverTimestamp(),
+      });
+
+      firebase.user(recipientId).update({
+        chatNotificationNum: increment,
       });
 
       setText('');

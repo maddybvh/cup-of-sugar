@@ -78,7 +78,7 @@ class SignInFormBase extends Component {
       <form onSubmit={this.onSubmit} className="form-group">
         <div className="form-group row">
           <label
-            for="colFormLabel"
+            htmlFor="colFormLabel"
             className="col-sm-2 col-form-label"
           >
             Email
@@ -96,7 +96,7 @@ class SignInFormBase extends Component {
         </div>
         <div className="form-group row">
           <label
-            for="colFormLabel"
+            htmlFor="colFormLabel"
             className="col-sm-2 col-form-label"
           >
             Password
