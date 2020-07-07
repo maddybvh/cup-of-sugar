@@ -4,9 +4,7 @@ import { withFirebase } from '../../Firebase';
 
 const CommentInput = (props) => {
   const [text, setText] = useState('');
-  const increment = props.firebase.item(props.itemUid).comments
-    ? props.firebase.item(props.itemUid).numComments.increment(1)
-    : 1;
+  const increment = props.firebase.fieldValue.increment(1);
 
   const onCreateComment = (event) => {
     event.preventDefault();
