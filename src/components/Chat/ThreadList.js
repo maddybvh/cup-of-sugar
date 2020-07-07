@@ -36,6 +36,7 @@ const ThreadList = ({
               <ThreadPreview
                 thread={thread}
                 currentUserName={currentUserName}
+                currentUserId={currentUserId}
                 setThreadId={setThreadId}
               />
             </span>

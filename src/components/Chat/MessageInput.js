@@ -17,6 +17,7 @@ export const MessageInput = withFirebase(
           newMessageText: text,
           newMessageFor: recipientId,
           newMessageAt: firebase.fieldValue.serverTimestamp(),
+          newMessageCount: increment,
         },
         {
           merge: true,
